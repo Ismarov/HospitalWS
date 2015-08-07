@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://bussines" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://bussines" xmlns:intf="http://bussines" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://bussines" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="obtenerBox">
+    <complexType/>
+   </element>
+   <element name="obtenerBoxResponse">
+    <complexType>
+     <sequence>
+      <element name="obtenerBoxReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="obtenerPorcentajeOcupacionBox">
+    <complexType>
+     <sequence>
+      <element name="boxId" type="xsd:int"/>
+      <element name="f1" type="xsd:dateTime"/>
+      <element name="f2" type="xsd:dateTime"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="obtenerPorcentajeOcupacionBoxResponse">
+    <complexType>
+     <sequence>
+      <element name="obtenerPorcentajeOcupacionBoxReturn" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="obtenerMedico">
+    <complexType/>
+   </element>
+   <element name="obtenerMedicoResponse">
+    <complexType>
+     <sequence>
+      <element name="obtenerMedicoReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="obtenerPorcentajeOcupacionMedico">
+    <complexType>
+     <sequence>
+      <element name="medicoId" type="xsd:int"/>
+      <element name="f1" type="xsd:dateTime"/>
+      <element name="f2" type="xsd:dateTime"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="obtenerPorcentajeOcupacionMedicoResponse">
+    <complexType>
+     <sequence>
+      <element name="obtenerPorcentajeOcupacionMedicoReturn" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="obtenerMedicoMasSolicitado">
+    <complexType>
+     <sequence>
+      <element name="f1" type="xsd:dateTime"/>
+      <element name="f2" type="xsd:dateTime"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="obtenerMedicoMasSolicitadoResponse">
+    <complexType>
+     <sequence>
+      <element name="obtenerMedicoMasSolicitadoReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="obtenerPacientesMasAtendido">
+    <complexType>
+     <sequence>
+      <element name="f1" type="xsd:dateTime"/>
+      <element name="f2" type="xsd:dateTime"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="obtenerPacientesMasAtendidoResponse">
+    <complexType>
+     <sequence>
+      <element name="obtenerPacientesMasAtendidoReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="obtenerPorcentajeOcupacionBoxRequest">
+
+      <wsdl:part element="impl:obtenerPorcentajeOcupacionBox" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="obtenerPacientesMasAtendidoResponse">
+
+      <wsdl:part element="impl:obtenerPacientesMasAtendidoResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="obtenerPorcentajeOcupacionMedicoResponse">
+
+      <wsdl:part element="impl:obtenerPorcentajeOcupacionMedicoResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="obtenerMedicoRequest">
+
+      <wsdl:part element="impl:obtenerMedico" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="obtenerMedicoMasSolicitadoResponse">
+
+      <wsdl:part element="impl:obtenerMedicoMasSolicitadoResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="obtenerMedicoMasSolicitadoRequest">
+
+      <wsdl:part element="impl:obtenerMedicoMasSolicitado" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="obtenerBoxRequest">
+
+      <wsdl:part element="impl:obtenerBox" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="obtenerPacientesMasAtendidoRequest">
+
+      <wsdl:part element="impl:obtenerPacientesMasAtendido" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="obtenerPorcentajeOcupacionBoxResponse">
+
+      <wsdl:part element="impl:obtenerPorcentajeOcupacionBoxResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="obtenerBoxResponse">
+
+      <wsdl:part element="impl:obtenerBoxResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="obtenerPorcentajeOcupacionMedicoRequest">
+
+      <wsdl:part element="impl:obtenerPorcentajeOcupacionMedico" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="obtenerMedicoResponse">
+
+      <wsdl:part element="impl:obtenerMedicoResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="Director">
+
+      <wsdl:operation name="obtenerBox">
+
+         <wsdl:input message="impl:obtenerBoxRequest" name="obtenerBoxRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:obtenerBoxResponse" name="obtenerBoxResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="obtenerPorcentajeOcupacionBox">
+
+         <wsdl:input message="impl:obtenerPorcentajeOcupacionBoxRequest" name="obtenerPorcentajeOcupacionBoxRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:obtenerPorcentajeOcupacionBoxResponse" name="obtenerPorcentajeOcupacionBoxResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="obtenerMedico">
+
+         <wsdl:input message="impl:obtenerMedicoRequest" name="obtenerMedicoRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:obtenerMedicoResponse" name="obtenerMedicoResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="obtenerPorcentajeOcupacionMedico">
+
+         <wsdl:input message="impl:obtenerPorcentajeOcupacionMedicoRequest" name="obtenerPorcentajeOcupacionMedicoRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:obtenerPorcentajeOcupacionMedicoResponse" name="obtenerPorcentajeOcupacionMedicoResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="obtenerMedicoMasSolicitado">
+
+         <wsdl:input message="impl:obtenerMedicoMasSolicitadoRequest" name="obtenerMedicoMasSolicitadoRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:obtenerMedicoMasSolicitadoResponse" name="obtenerMedicoMasSolicitadoResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="obtenerPacientesMasAtendido">
+
+         <wsdl:input message="impl:obtenerPacientesMasAtendidoRequest" name="obtenerPacientesMasAtendidoRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:obtenerPacientesMasAtendidoResponse" name="obtenerPacientesMasAtendidoResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="DirectorSoapBinding" type="impl:Director">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="obtenerBox">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="obtenerBoxRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="obtenerBoxResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="obtenerPorcentajeOcupacionBox">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="obtenerPorcentajeOcupacionBoxRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="obtenerPorcentajeOcupacionBoxResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="obtenerMedico">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="obtenerMedicoRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="obtenerMedicoResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="obtenerPorcentajeOcupacionMedico">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="obtenerPorcentajeOcupacionMedicoRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="obtenerPorcentajeOcupacionMedicoResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="obtenerMedicoMasSolicitado">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="obtenerMedicoMasSolicitadoRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="obtenerMedicoMasSolicitadoResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="obtenerPacientesMasAtendido">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="obtenerPacientesMasAtendidoRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="obtenerPacientesMasAtendidoResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="DirectorService">
+
+      <wsdl:port binding="impl:DirectorSoapBinding" name="Director">
+
+         <wsdlsoap:address location="http://localhost:9080/HospitalWS/services/Director"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>
