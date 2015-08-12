@@ -19,7 +19,7 @@ import bussines.Director;
 
 public class PersonOpenMRS {
 	RestClient rc = new RestClient("admin", "Admin1234",
-			"http://localhost:8080/openmrs/ws/rest/v1");
+			"http://localhost:8080/openmrs1/ws/rest/v1");
 
 	Director dir = new Director();
 	PersonaVo p = new PersonaVo();
@@ -44,7 +44,7 @@ public class PersonOpenMRS {
 		if (pers_uuid != null) {
 
 			identifiers
-					.add("identifier", p.getId())
+					.add("identifier", String.valueOf(p.getId()))
 					.add("identifierType",
 							"8d793bee-c2cc-11de-8d13-0010c6dffd0f")
 					.add("location", "8d6c993e-c2cc-11de-8d13-0010c6dffd0f")
@@ -101,7 +101,7 @@ public class PersonOpenMRS {
 		if (pers_uuid != null) {
 
 			identifiers
-					.add("identifier", m.getId())
+					.add("identifier", String.valueOf(m.getId()))
 					.add("providerattributetype",
 							"8d793bee-c2cc-11de-8d13-0010c6dffd0f")
 					.add("location", "8d6c993e-c2cc-11de-8d13-0010c6dffd0f")
