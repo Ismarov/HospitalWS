@@ -3,7 +3,9 @@ package bussines;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
@@ -23,6 +25,7 @@ import vo.MedicoVo;
 import vo.PacienteVo;
 import vo.PersonaVo;
 import vo.ReservaVo;
+import cliente.PersonOpenMRS;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -169,13 +172,19 @@ public class Director {
 			per.setEmail(email);
 			per.setActivo((byte) activo);
 
+			
 			if (orm.PersonaDAO.save(per)) {
 				orm.PersonaDAO.refresh(per);
 				orm.Paciente pac = new orm.Paciente();
 				pac.setPersona(per);
+				
 				if (orm.PacienteDAO.save(pac)) {
 					orm.PacienteDAO.refresh(pac);
 					PacienteVo pvo = PacienteVo.fromORM(pac);
+					
+					PersonOpenMRS pomrs = new PersonOpenMRS();
+					pomrs.ingresarPersonaOMRS(pvo.getPersonavo());
+					
 					return g.toJson(pvo);
 				}
 			}
