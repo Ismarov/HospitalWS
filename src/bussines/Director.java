@@ -225,6 +225,10 @@ public class Director {
 				if (orm.MedicoDAO.save(med)) {
 					orm.MedicoDAO.refresh(med);
 					MedicoVo mvo = MedicoVo.fromORM(med);
+					
+					PersonOpenMRS pomrs = new PersonOpenMRS();
+					pomrs.ingresarMedicoORMS(mvo);
+					
 					return g.toJson(mvo);
 				}
 			}
