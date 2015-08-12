@@ -183,7 +183,7 @@ public class Director {
 					PacienteVo pvo = PacienteVo.fromORM(pac);
 					
 					PersonOpenMRS pomrs = new PersonOpenMRS();
-					pomrs.ingresarPersonaOMRS(pvo.getPersonavo());
+					pomrs.ingresarPacienteORMS(pvo);
 					
 					return g.toJson(pvo);
 				}
