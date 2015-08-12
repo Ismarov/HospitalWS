@@ -24,7 +24,7 @@ public class ReservaDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final AssociationExpression persona;
 	public final IntegerExpression pacienteId;
 	public final AssociationExpression paciente;
-	public final CollectionExpression hora_medicas;
+	public final CollectionExpression hora_medica;
 	
 	public ReservaDetachedCriteria() {
 		super(orm.Reserva.class, orm.ReservaCriteria.class);
@@ -33,7 +33,7 @@ public class ReservaDetachedCriteria extends AbstractORMDetachedCriteria {
 		persona = new AssociationExpression("persona", this.getDetachedCriteria());
 		pacienteId = new IntegerExpression("paciente.id", this.getDetachedCriteria());
 		paciente = new AssociationExpression("paciente", this.getDetachedCriteria());
-		hora_medicas = new CollectionExpression("ORM_hora_medicas", this.getDetachedCriteria());
+		hora_medica = new CollectionExpression("ORM_hora_medica", this.getDetachedCriteria());
 	}
 	
 	public ReservaDetachedCriteria(DetachedCriteria aDetachedCriteria) {
@@ -43,7 +43,7 @@ public class ReservaDetachedCriteria extends AbstractORMDetachedCriteria {
 		persona = new AssociationExpression("persona", this.getDetachedCriteria());
 		pacienteId = new IntegerExpression("paciente.id", this.getDetachedCriteria());
 		paciente = new AssociationExpression("paciente", this.getDetachedCriteria());
-		hora_medicas = new CollectionExpression("ORM_hora_medicas", this.getDetachedCriteria());
+		hora_medica = new CollectionExpression("ORM_hora_medica", this.getDetachedCriteria());
 	}
 	
 	public PersonaDetachedCriteria createPersonaCriteria() {
@@ -54,8 +54,8 @@ public class ReservaDetachedCriteria extends AbstractORMDetachedCriteria {
 		return new PacienteDetachedCriteria(createCriteria("paciente"));
 	}
 	
-	public Hora_medicaDetachedCriteria createHora_medicasCriteria() {
-		return new Hora_medicaDetachedCriteria(createCriteria("ORM_hora_medicas"));
+	public Hora_medicaDetachedCriteria createHora_medicaCriteria() {
+		return new Hora_medicaDetachedCriteria(createCriteria("ORM_hora_medica"));
 	}
 	
 	public Reserva uniqueReserva(PersistentSession session) {

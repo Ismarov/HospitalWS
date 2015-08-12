@@ -24,7 +24,7 @@ public class ReservaCriteria extends AbstractORMCriteria {
 	public final AssociationExpression persona;
 	public final IntegerExpression pacienteId;
 	public final AssociationExpression paciente;
-	public final CollectionExpression hora_medicas;
+	public final CollectionExpression hora_medica;
 	
 	public ReservaCriteria(Criteria criteria) {
 		super(criteria);
@@ -33,7 +33,7 @@ public class ReservaCriteria extends AbstractORMCriteria {
 		persona = new AssociationExpression("persona", this);
 		pacienteId = new IntegerExpression("paciente.id", this);
 		paciente = new AssociationExpression("paciente", this);
-		hora_medicas = new CollectionExpression("ORM_hora_medicas", this);
+		hora_medica = new CollectionExpression("ORM_hora_medica", this);
 	}
 	
 	public ReservaCriteria(PersistentSession session) {
@@ -52,8 +52,8 @@ public class ReservaCriteria extends AbstractORMCriteria {
 		return new PacienteCriteria(createCriteria("paciente"));
 	}
 	
-	public Hora_medicaCriteria createHora_medicasCriteria() {
-		return new Hora_medicaCriteria(createCriteria("ORM_hora_medicas"));
+	public Hora_medicaCriteria createHora_medicaCriteria() {
+		return new Hora_medicaCriteria(createCriteria("ORM_hora_medica"));
 	}
 	
 	public Reserva uniqueReserva() {

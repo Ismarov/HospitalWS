@@ -331,6 +331,10 @@ public class PacienteDAO {
 			for(int i = 0; i < lReservas.length; i++) {
 				lReservas[i].setPaciente(null);
 			}
+			if(paciente.getPaciente_openmrs() != null) {
+				paciente.getPaciente_openmrs().setPaciente(null);
+			}
+			
 			return delete(paciente);
 		}
 		catch(Exception e) {
@@ -349,6 +353,10 @@ public class PacienteDAO {
 			for(int i = 0; i < lReservas.length; i++) {
 				lReservas[i].setPaciente(null);
 			}
+			if(paciente.getPaciente_openmrs() != null) {
+				paciente.getPaciente_openmrs().setPaciente(null);
+			}
+			
 			try {
 				session.delete(paciente);
 				return true;

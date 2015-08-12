@@ -243,12 +243,12 @@
   </Setting>
   <Setting type="1048576">
     <Driver>MySQL5 (Connector/J Driver)</Driver>
-    <DriverFiles>&lt;&lt;MySQL Connector/J 5.1.33&gt;&gt;</DriverFiles>
+    <DriverFiles>D:\UFRO\mysql-connector-java-5.1.16\mysql-connector-java-5.1.16-bin.jar</DriverFiles>
     <Dialect>org.hibernate.dialect.MySQL5InnoDBDialect</Dialect>
     <DriverClass>com.mysql.jdbc.Driver</DriverClass>
     <URL>jdbc:mysql://localhost:3306/hospital_sc</URL>
     <UserName>root</UserName>
-    <Password>toor</Password>
+    <Password>1234</Password>
     <HostName>localhost</HostName>
     <PortNO>3306</PortNO>
     <DBName>hospital_sc</DBName>
@@ -271,7 +271,7 @@
     <ServerName></ServerName>
     <SelectedForm>true</SelectedForm>
   </Setting>
-  <Setting type="2">
+  <Setting type="16777216">
     <Driver></Driver>
     <DriverFiles></DriverFiles>
     <Dialect></Dialect>
@@ -286,7 +286,7 @@
     <ServerName></ServerName>
     <SelectedForm>true</SelectedForm>
   </Setting>
-  <Setting type="16777216">
+  <Setting type="2">
     <Driver></Driver>
     <DriverFiles></DriverFiles>
     <Dialect></Dialect>

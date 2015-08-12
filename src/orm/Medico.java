@@ -38,6 +38,10 @@ public class Medico implements Serializable {
 		else if (key == orm.ORMConstants.KEY_MEDICO_ESPECIALIDAD) {
 			this.especialidad = (orm.Especialidad) owner;
 		}
+		
+		else if (key == orm.ORMConstants.KEY_MEDICO_PROVEEDOR_OPENMRS) {
+			this.proveedor_openmrs = (orm.Proveedor_openmrs) owner;
+		}
 	}
 	
 	@Transient	
@@ -72,6 +76,10 @@ public class Medico implements Serializable {
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
 	private java.util.Set ORM_hora_medica = new java.util.HashSet();
+	
+	@OneToOne(mappedBy="medico", targetEntity=orm.Proveedor_openmrs.class, fetch=FetchType.LAZY)	
+	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
+	private orm.Proveedor_openmrs proveedor_openmrs;
 	
 	private void setId(int value) {
 		this.id = value;
@@ -136,6 +144,23 @@ public class Medico implements Serializable {
 	
 	@Transient	
 	public final orm.Hora_medicaSetCollection hora_medica = new orm.Hora_medicaSetCollection(this, _ormAdapter, orm.ORMConstants.KEY_MEDICO_HORA_MEDICA, orm.ORMConstants.KEY_HORA_MEDICA_MEDICO, orm.ORMConstants.KEY_MUL_ONE_TO_MANY);
+	
+	public void setProveedor_openmrs(orm.Proveedor_openmrs value) {
+		if (this.proveedor_openmrs != value) {
+			orm.Proveedor_openmrs lproveedor_openmrs = this.proveedor_openmrs;
+			this.proveedor_openmrs = value;
+			if (value != null) {
+				proveedor_openmrs.setMedico(this);
+			}
+			if (lproveedor_openmrs != null) {
+				lproveedor_openmrs.setMedico(null);
+			}
+		}
+	}
+	
+	public orm.Proveedor_openmrs getProveedor_openmrs() {
+		return proveedor_openmrs;
+	}
 	
 	public String toString() {
 		return String.valueOf(getId());

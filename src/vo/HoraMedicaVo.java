@@ -8,8 +8,9 @@ public class HoraMedicaVo {
 	private BoxVo boxvo;
 	private Date finicio;
 	private Date ffin;
-	
-	public HoraMedicaVo(int id, MedicoVo medicovo, BoxVo boxvo, Date f_inicio, Date f_fin) {
+
+	public HoraMedicaVo(int id, MedicoVo medicovo, BoxVo boxvo, Date f_inicio,
+			Date f_fin) {
 		super();
 		this.id = id;
 		this.medicovo = medicovo;
@@ -17,11 +18,11 @@ public class HoraMedicaVo {
 		this.finicio = f_inicio;
 		this.ffin = f_fin;
 	}
-	
-	public int getId(){
+
+	public int getId() {
 		return this.id;
 	}
-	
+
 	public MedicoVo getMedicoVo() {
 		return medicovo;
 	}
@@ -37,16 +38,12 @@ public class HoraMedicaVo {
 	public Date getFfin() {
 		return ffin;
 	}
-	
-	public static HoraMedicaVo fromORM(orm.Hora_medica h){
-		HoraMedicaVo hm = new HoraMedicaVo(
-				h.getId(),
-				MedicoVo.fromORM(h.getMedico()),
-				BoxVo.fromORM(h.getBox()),
-				new Date(h.getF_inicio().getTime()),
-				new Date(h.getF_fin().getTime())
-				);
+
+	public static HoraMedicaVo fromORM(orm.Hora_medica h) {
+		HoraMedicaVo hm = new HoraMedicaVo(h.getId(), MedicoVo.fromORM(h
+				.getMedico()), BoxVo.fromORM(h.getBox()), new Date(h
+				.getF_inicio().getTime()), new Date(h.getF_fin().getTime()));
 		return hm;
 	}
-	
+
 }

@@ -9,25 +9,28 @@ import org.orm.PersistentException;
 
 import orm.Hora_medicaCriteria;
 import vo.HoraMedicaVo;
+import vo.MedicoVo;
+import vo.PacienteVo;
 import vo.ReservaVo;
 
 import com.google.gson.Gson;
 
 public class Medico {
-	public String buscarSuDisponibilidadHora(int idMedico, Date f1, Date f2){
+	public String buscarSuDisponibilidadHora(int idMedico, Date f1, Date f2) {
 		Gson g = new Gson();
 		List<HoraMedicaVo> lhoras = new ArrayList<HoraMedicaVo>();
 		try {
 			Hora_medicaCriteria c = new Hora_medicaCriteria();
-			c.f_inicio.between(new Timestamp(f1.getTime()), new Timestamp(f2.getTime()));
-			c.hora_medica_reserva.isEmpty();
+			c.f_inicio.between(new Timestamp(f1.getTime()),
+					new Timestamp(f2.getTime()));
+			c.reserva.isEmpty();
 			c.medicoId.eq(idMedico);
-			
+
 			List<orm.Hora_medica> horas = c.list();
-			for(int i=0; i<horas.size();i++){
+			for (int i = 0; i < horas.size(); i++) {
 				HoraMedicaVo hmed = HoraMedicaVo.fromORM(horas.get(i));
 				lhoras.add(hmed);
-			}//end for
+			}// end for
 			return g.toJson(lhoras);
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
@@ -35,7 +38,7 @@ public class Medico {
 		}
 		return null;
 	}
-	
+
 	public String ReservarHoraMedicaControl(int idHoraControl[], int idPaciente) {
 
 		Gson g = new Gson();
@@ -50,7 +53,7 @@ public class Medico {
 
 				orm.Hora_medica hm = orm.Hora_medicaDAO
 						.getHora_medicaByORMID(idHoraControl[i]);
-				if (hm == null || hm.hora_medica_reserva.size() != 0 )
+				if (hm == null || hm.reserva.size() != 0)
 					return null;
 				horas.add(hm);
 
@@ -62,7 +65,7 @@ public class Medico {
 				re.setPaciente(pa);
 				re.setPersona(pa.getPersona());
 				for (int i = 0; i < horas.size(); i++) {
-					re.hora_medicas.add(horas.get(i));
+					re.hora_medica.add(horas.get(i));
 				}
 				orm.ReservaDAO.save(re);
 				orm.ReservaDAO.refresh(re);

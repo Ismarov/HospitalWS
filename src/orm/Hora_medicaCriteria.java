@@ -26,7 +26,11 @@ public class Hora_medicaCriteria extends AbstractORMCriteria {
 	public final AssociationExpression box;
 	public final TimestampExpression f_inicio;
 	public final TimestampExpression f_fin;
-	public final CollectionExpression hora_medica_reserva;
+	public final CollectionExpression reserva;
+	public final IntegerExpression hora_medica_visita_openmrsId;
+	public final AssociationExpression hora_medica_visita_openmrs;
+	public final IntegerExpression hora_medica_aps_encuentro_openmrsId;
+	public final AssociationExpression hora_medica_aps_encuentro_openmrs;
 	
 	public Hora_medicaCriteria(Criteria criteria) {
 		super(criteria);
@@ -37,7 +41,11 @@ public class Hora_medicaCriteria extends AbstractORMCriteria {
 		box = new AssociationExpression("box", this);
 		f_inicio = new TimestampExpression("f_inicio", this);
 		f_fin = new TimestampExpression("f_fin", this);
-		hora_medica_reserva = new CollectionExpression("ORM_hora_medica_reserva", this);
+		reserva = new CollectionExpression("ORM_reserva", this);
+		hora_medica_visita_openmrsId = new IntegerExpression("hora_medica_visita_openmrs.id", this);
+		hora_medica_visita_openmrs = new AssociationExpression("hora_medica_visita_openmrs", this);
+		hora_medica_aps_encuentro_openmrsId = new IntegerExpression("hora_medica_aps_encuentro_openmrs.id", this);
+		hora_medica_aps_encuentro_openmrs = new AssociationExpression("hora_medica_aps_encuentro_openmrs", this);
 	}
 	
 	public Hora_medicaCriteria(PersistentSession session) {
@@ -56,8 +64,16 @@ public class Hora_medicaCriteria extends AbstractORMCriteria {
 		return new BoxCriteria(createCriteria("box"));
 	}
 	
-	public ReservaCriteria createHora_medica_reservaCriteria() {
-		return new ReservaCriteria(createCriteria("ORM_hora_medica_reserva"));
+	public ReservaCriteria createReservaCriteria() {
+		return new ReservaCriteria(createCriteria("ORM_reserva"));
+	}
+	
+	public Hora_medica_visita_openmrsCriteria createHora_medica_visita_openmrsCriteria() {
+		return new Hora_medica_visita_openmrsCriteria(createCriteria("hora_medica_visita_openmrs"));
+	}
+	
+	public Hora_medica_aps_encuentro_openmrsCriteria createHora_medica_aps_encuentro_openmrsCriteria() {
+		return new Hora_medica_aps_encuentro_openmrsCriteria(createCriteria("hora_medica_aps_encuentro_openmrs"));
 	}
 	
 	public Hora_medica uniqueHora_medica() {

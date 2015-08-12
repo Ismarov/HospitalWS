@@ -33,6 +33,18 @@ public class DeleteHospitaldb2Data {
 			orm.Box lormBox = orm.BoxDAO.loadBoxByQuery(null, null);
 			// Delete the persistent object
 			orm.BoxDAO.delete(lormBox);
+			orm.Paciente_openmrs lormPaciente_openmrs = orm.Paciente_openmrsDAO.loadPaciente_openmrsByQuery(null, null);
+			// Delete the persistent object
+			orm.Paciente_openmrsDAO.delete(lormPaciente_openmrs);
+			orm.Hora_medica_aps_encuentro_openmrs lormHora_medica_aps_encuentro_openmrs = orm.Hora_medica_aps_encuentro_openmrsDAO.loadHora_medica_aps_encuentro_openmrsByQuery(null, null);
+			// Delete the persistent object
+			orm.Hora_medica_aps_encuentro_openmrsDAO.delete(lormHora_medica_aps_encuentro_openmrs);
+			orm.Hora_medica_visita_openmrs lormHora_medica_visita_openmrs = orm.Hora_medica_visita_openmrsDAO.loadHora_medica_visita_openmrsByQuery(null, null);
+			// Delete the persistent object
+			orm.Hora_medica_visita_openmrsDAO.delete(lormHora_medica_visita_openmrs);
+			orm.Proveedor_openmrs lormProveedor_openmrs = orm.Proveedor_openmrsDAO.loadProveedor_openmrsByQuery(null, null);
+			// Delete the persistent object
+			orm.Proveedor_openmrsDAO.delete(lormProveedor_openmrs);
 			t.commit();
 		}
 		catch (Exception e) {

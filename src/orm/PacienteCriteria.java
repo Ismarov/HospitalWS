@@ -23,6 +23,8 @@ public class PacienteCriteria extends AbstractORMCriteria {
 	public final IntegerExpression personaId;
 	public final AssociationExpression persona;
 	public final CollectionExpression reserva;
+	public final IntegerExpression paciente_openmrsId;
+	public final AssociationExpression paciente_openmrs;
 	
 	public PacienteCriteria(Criteria criteria) {
 		super(criteria);
@@ -30,6 +32,8 @@ public class PacienteCriteria extends AbstractORMCriteria {
 		personaId = new IntegerExpression("persona.id", this);
 		persona = new AssociationExpression("persona", this);
 		reserva = new CollectionExpression("ORM_reserva", this);
+		paciente_openmrsId = new IntegerExpression("paciente_openmrs.id", this);
+		paciente_openmrs = new AssociationExpression("paciente_openmrs", this);
 	}
 	
 	public PacienteCriteria(PersistentSession session) {
@@ -46,6 +50,10 @@ public class PacienteCriteria extends AbstractORMCriteria {
 	
 	public ReservaCriteria createReservaCriteria() {
 		return new ReservaCriteria(createCriteria("ORM_reserva"));
+	}
+	
+	public Paciente_openmrsCriteria createPaciente_openmrsCriteria() {
+		return new Paciente_openmrsCriteria(createCriteria("paciente_openmrs"));
 	}
 	
 	public Paciente uniquePaciente() {

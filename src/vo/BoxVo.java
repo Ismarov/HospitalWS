@@ -13,12 +13,12 @@ public class BoxVo {
 	public String getNombre() {
 		return nombre;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
-	
-	public static BoxVo fromORM(orm.Box b){
+
+	public static BoxVo fromORM(orm.Box b) {
 		BoxVo bo = new BoxVo(b.getId(), b.getNombre());
 		return bo;
 	}

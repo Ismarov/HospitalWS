@@ -26,7 +26,11 @@ public class Hora_medicaDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final AssociationExpression box;
 	public final TimestampExpression f_inicio;
 	public final TimestampExpression f_fin;
-	public final CollectionExpression hora_medica_reserva;
+	public final CollectionExpression reserva;
+	public final IntegerExpression hora_medica_visita_openmrsId;
+	public final AssociationExpression hora_medica_visita_openmrs;
+	public final IntegerExpression hora_medica_aps_encuentro_openmrsId;
+	public final AssociationExpression hora_medica_aps_encuentro_openmrs;
 	
 	public Hora_medicaDetachedCriteria() {
 		super(orm.Hora_medica.class, orm.Hora_medicaCriteria.class);
@@ -37,7 +41,11 @@ public class Hora_medicaDetachedCriteria extends AbstractORMDetachedCriteria {
 		box = new AssociationExpression("box", this.getDetachedCriteria());
 		f_inicio = new TimestampExpression("f_inicio", this.getDetachedCriteria());
 		f_fin = new TimestampExpression("f_fin", this.getDetachedCriteria());
-		hora_medica_reserva = new CollectionExpression("ORM_hora_medica_reserva", this.getDetachedCriteria());
+		reserva = new CollectionExpression("ORM_reserva", this.getDetachedCriteria());
+		hora_medica_visita_openmrsId = new IntegerExpression("hora_medica_visita_openmrs.id", this.getDetachedCriteria());
+		hora_medica_visita_openmrs = new AssociationExpression("hora_medica_visita_openmrs", this.getDetachedCriteria());
+		hora_medica_aps_encuentro_openmrsId = new IntegerExpression("hora_medica_aps_encuentro_openmrs.id", this.getDetachedCriteria());
+		hora_medica_aps_encuentro_openmrs = new AssociationExpression("hora_medica_aps_encuentro_openmrs", this.getDetachedCriteria());
 	}
 	
 	public Hora_medicaDetachedCriteria(DetachedCriteria aDetachedCriteria) {
@@ -49,7 +57,11 @@ public class Hora_medicaDetachedCriteria extends AbstractORMDetachedCriteria {
 		box = new AssociationExpression("box", this.getDetachedCriteria());
 		f_inicio = new TimestampExpression("f_inicio", this.getDetachedCriteria());
 		f_fin = new TimestampExpression("f_fin", this.getDetachedCriteria());
-		hora_medica_reserva = new CollectionExpression("ORM_hora_medica_reserva", this.getDetachedCriteria());
+		reserva = new CollectionExpression("ORM_reserva", this.getDetachedCriteria());
+		hora_medica_visita_openmrsId = new IntegerExpression("hora_medica_visita_openmrs.id", this.getDetachedCriteria());
+		hora_medica_visita_openmrs = new AssociationExpression("hora_medica_visita_openmrs", this.getDetachedCriteria());
+		hora_medica_aps_encuentro_openmrsId = new IntegerExpression("hora_medica_aps_encuentro_openmrs.id", this.getDetachedCriteria());
+		hora_medica_aps_encuentro_openmrs = new AssociationExpression("hora_medica_aps_encuentro_openmrs", this.getDetachedCriteria());
 	}
 	
 	public MedicoDetachedCriteria createMedicoCriteria() {
@@ -60,8 +72,16 @@ public class Hora_medicaDetachedCriteria extends AbstractORMDetachedCriteria {
 		return new BoxDetachedCriteria(createCriteria("box"));
 	}
 	
-	public ReservaDetachedCriteria createHora_medica_reservaCriteria() {
-		return new ReservaDetachedCriteria(createCriteria("ORM_hora_medica_reserva"));
+	public ReservaDetachedCriteria createReservaCriteria() {
+		return new ReservaDetachedCriteria(createCriteria("ORM_reserva"));
+	}
+	
+	public Hora_medica_visita_openmrsDetachedCriteria createHora_medica_visita_openmrsCriteria() {
+		return new Hora_medica_visita_openmrsDetachedCriteria(createCriteria("hora_medica_visita_openmrs"));
+	}
+	
+	public Hora_medica_aps_encuentro_openmrsDetachedCriteria createHora_medica_aps_encuentro_openmrsCriteria() {
+		return new Hora_medica_aps_encuentro_openmrsDetachedCriteria(createCriteria("hora_medica_aps_encuentro_openmrs"));
 	}
 	
 	public Hora_medica uniqueHora_medica(PersistentSession session) {

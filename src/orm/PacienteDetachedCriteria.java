@@ -23,6 +23,8 @@ public class PacienteDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final IntegerExpression personaId;
 	public final AssociationExpression persona;
 	public final CollectionExpression reserva;
+	public final IntegerExpression paciente_openmrsId;
+	public final AssociationExpression paciente_openmrs;
 	
 	public PacienteDetachedCriteria() {
 		super(orm.Paciente.class, orm.PacienteCriteria.class);
@@ -30,6 +32,8 @@ public class PacienteDetachedCriteria extends AbstractORMDetachedCriteria {
 		personaId = new IntegerExpression("persona.id", this.getDetachedCriteria());
 		persona = new AssociationExpression("persona", this.getDetachedCriteria());
 		reserva = new CollectionExpression("ORM_reserva", this.getDetachedCriteria());
+		paciente_openmrsId = new IntegerExpression("paciente_openmrs.id", this.getDetachedCriteria());
+		paciente_openmrs = new AssociationExpression("paciente_openmrs", this.getDetachedCriteria());
 	}
 	
 	public PacienteDetachedCriteria(DetachedCriteria aDetachedCriteria) {
@@ -38,6 +42,8 @@ public class PacienteDetachedCriteria extends AbstractORMDetachedCriteria {
 		personaId = new IntegerExpression("persona.id", this.getDetachedCriteria());
 		persona = new AssociationExpression("persona", this.getDetachedCriteria());
 		reserva = new CollectionExpression("ORM_reserva", this.getDetachedCriteria());
+		paciente_openmrsId = new IntegerExpression("paciente_openmrs.id", this.getDetachedCriteria());
+		paciente_openmrs = new AssociationExpression("paciente_openmrs", this.getDetachedCriteria());
 	}
 	
 	public PersonaDetachedCriteria createPersonaCriteria() {
@@ -46,6 +52,10 @@ public class PacienteDetachedCriteria extends AbstractORMDetachedCriteria {
 	
 	public ReservaDetachedCriteria createReservaCriteria() {
 		return new ReservaDetachedCriteria(createCriteria("ORM_reserva"));
+	}
+	
+	public Paciente_openmrsDetachedCriteria createPaciente_openmrsCriteria() {
+		return new Paciente_openmrsDetachedCriteria(createCriteria("paciente_openmrs"));
 	}
 	
 	public Paciente uniquePaciente(PersistentSession session) {

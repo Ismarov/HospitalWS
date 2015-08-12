@@ -56,8 +56,8 @@ public class RepMedMasSol extends Reporte {
 			MedicoCriteria mc = new MedicoCriteria();
 			Hora_medicaCriteria hmc = mc.createHora_medicaCriteria();
 			hmc.f_inicio.between(new Timestamp(t1.getTime()), new Timestamp(t2.getTime()));
-			ReservaCriteria rc = hmc.createHora_medica_reservaCriteria();
-			rc.hora_medicas.isNotEmpty();
+			ReservaCriteria rc = hmc.createReservaCriteria();
+			rc.hora_medica.isNotEmpty();
 			mc.addOrder(Order.asc("id"));
 			//mc.setProjection(Projections.distinct(null));
 			
@@ -67,7 +67,7 @@ public class RepMedMasSol extends Reporte {
 			
 			orm.Hora_medica hm = orm.Hora_medicaDAO.getHora_medicaByORMID(1);
 			orm.Reserva re = orm.ReservaDAO.getReservaByORMID(1);
-			re.hora_medicas.add(hm);
+			re.hora_medica.add(hm);
 			orm.ReservaDAO.save(re);
 			
 			// Cuenta de la cantidad de reservas de cada paciente y las asocia a este.

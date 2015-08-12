@@ -335,6 +335,10 @@ public class MedicoDAO {
 			for(int i = 0; i < lHora_medicas.length; i++) {
 				lHora_medicas[i].setMedico(null);
 			}
+			if(medico.getProveedor_openmrs() != null) {
+				medico.getProveedor_openmrs().setMedico(null);
+			}
+			
 			return delete(medico);
 		}
 		catch(Exception e) {
@@ -357,6 +361,10 @@ public class MedicoDAO {
 			for(int i = 0; i < lHora_medicas.length; i++) {
 				lHora_medicas[i].setMedico(null);
 			}
+			if(medico.getProveedor_openmrs() != null) {
+				medico.getProveedor_openmrs().setMedico(null);
+			}
+			
 			try {
 				session.delete(medico);
 				return true;

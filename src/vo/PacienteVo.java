@@ -9,16 +9,16 @@ public class PacienteVo {
 		this.id = id;
 		this.personavo = personavo;
 	}
-	
+
 	public int getId() {
 		return this.id;
 	}
-	
+
 	public PersonaVo getPersonavo() {
 		return personavo;
 	}
 
-	public static PacienteVo fromORM(orm.Paciente paciente){
+	public static PacienteVo fromORM(orm.Paciente paciente) {
 		PersonaVo pe = PersonaVo.fromORM(paciente.getPersona());
 		PacienteVo pa = new PacienteVo(paciente.getId(), pe);
 		return pa;

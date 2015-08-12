@@ -51,7 +51,7 @@ public class RepPacMasFrec extends Reporte {
 			//Traer pacientes que han reservado ordenados por id.
 			PacienteCriteria pc = new PacienteCriteria();
 			ReservaCriteria rc = pc.createReservaCriteria();
-			Hora_medicaCriteria hmc = rc.createHora_medicasCriteria();
+			Hora_medicaCriteria hmc = rc.createHora_medicaCriteria();
 			hmc.f_inicio.between(new Timestamp(t1.getTime()), new Timestamp(t2.getTime()));
 			pc.addOrder(Order.asc("id"));
 			

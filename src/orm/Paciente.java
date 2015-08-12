@@ -54,6 +54,10 @@ public class Paciente implements Serializable {
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
 	private java.util.Set ORM_reserva = new java.util.HashSet();
 	
+	@OneToOne(mappedBy="paciente", targetEntity=orm.Paciente_openmrs.class, fetch=FetchType.LAZY)	
+	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
+	private orm.Paciente_openmrs paciente_openmrs;
+	
 	private void setId(int value) {
 		this.id = value;
 	}
@@ -93,6 +97,23 @@ public class Paciente implements Serializable {
 	
 	@Transient	
 	public final orm.ReservaSetCollection reserva = new orm.ReservaSetCollection(this, _ormAdapter, orm.ORMConstants.KEY_PACIENTE_RESERVA, orm.ORMConstants.KEY_RESERVA_PACIENTE, orm.ORMConstants.KEY_MUL_ONE_TO_MANY);
+	
+	public void setPaciente_openmrs(orm.Paciente_openmrs value) {
+		if (this.paciente_openmrs != value) {
+			orm.Paciente_openmrs lpaciente_openmrs = this.paciente_openmrs;
+			this.paciente_openmrs = value;
+			if (value != null) {
+				paciente_openmrs.setPaciente(this);
+			}
+			if (lpaciente_openmrs != null) {
+				lpaciente_openmrs.setPaciente(null);
+			}
+		}
+	}
+	
+	public orm.Paciente_openmrs getPaciente_openmrs() {
+		return paciente_openmrs;
+	}
 	
 	public String toString() {
 		return String.valueOf(getId());

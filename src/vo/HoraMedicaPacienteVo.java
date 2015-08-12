@@ -3,14 +3,12 @@ package vo;
 public class HoraMedicaPacienteVo {
 	private HoraMedicaVo horamedicavo;
 	private ReservaVo reservavo;
-	
-	public HoraMedicaPacienteVo(HoraMedicaVo horamedicavo,
-			ReservaVo reservavo) {
+
+	public HoraMedicaPacienteVo(HoraMedicaVo horamedicavo, ReservaVo reservavo) {
 		super();
 		this.horamedicavo = horamedicavo;
 		this.reservavo = reservavo;
 	}
-	
 
 	public HoraMedicaVo getHoramedicapaciente_horamedicavo() {
 		return horamedicavo;
@@ -29,6 +27,5 @@ public class HoraMedicaPacienteVo {
 			ReservaVo horamedicapaciente_reservavo) {
 		this.reservavo = horamedicapaciente_reservavo;
 	}
-	
 
 }

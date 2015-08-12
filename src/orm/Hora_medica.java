@@ -23,8 +23,8 @@ public class Hora_medica implements Serializable {
 	}
 	
 	private java.util.Set this_getSet (int key) {
-		if (key == orm.ORMConstants.KEY_HORA_MEDICA_HORA_MEDICA_RESERVA) {
-			return ORM_hora_medica_reserva;
+		if (key == orm.ORMConstants.KEY_HORA_MEDICA_RESERVA) {
+			return ORM_reserva;
 		}
 		
 		return null;
@@ -37,6 +37,14 @@ public class Hora_medica implements Serializable {
 		
 		else if (key == orm.ORMConstants.KEY_HORA_MEDICA_BOX) {
 			this.box = (orm.Box) owner;
+		}
+		
+		else if (key == orm.ORMConstants.KEY_HORA_MEDICA_HORA_MEDICA_VISITA_OPENMRS) {
+			this.hora_medica_visita_openmrs = (orm.Hora_medica_visita_openmrs) owner;
+		}
+		
+		else if (key == orm.ORMConstants.KEY_HORA_MEDICA_HORA_MEDICA_APS_ENCUENTRO_OPENMRS) {
+			this.hora_medica_aps_encuentro_openmrs = (orm.Hora_medica_aps_encuentro_openmrs) owner;
 		}
 	}
 	
@@ -74,10 +82,18 @@ public class Hora_medica implements Serializable {
 	@Column(name="f_fin", nullable=false)	
 	private java.sql.Timestamp f_fin;
 	
-	@ManyToMany(mappedBy="ORM_hora_medicas", targetEntity=orm.Reserva.class)	
+	@ManyToMany(mappedBy="ORM_hora_medica", targetEntity=orm.Reserva.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
-	private java.util.Set ORM_hora_medica_reserva = new java.util.HashSet();
+	private java.util.Set ORM_reserva = new java.util.HashSet();
+	
+	@OneToOne(mappedBy="hora_medica", targetEntity=orm.Hora_medica_visita_openmrs.class, fetch=FetchType.LAZY)	
+	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
+	private orm.Hora_medica_visita_openmrs hora_medica_visita_openmrs;
+	
+	@OneToOne(mappedBy="hora_medica", targetEntity=orm.Hora_medica_aps_encuentro_openmrs.class, fetch=FetchType.LAZY)	
+	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
+	private orm.Hora_medica_aps_encuentro_openmrs hora_medica_aps_encuentro_openmrs;
 	
 	private void setId(int value) {
 		this.id = value;
@@ -155,16 +171,50 @@ public class Hora_medica implements Serializable {
 		return box;
 	}
 	
-	private void setORM_Hora_medica_reserva(java.util.Set value) {
-		this.ORM_hora_medica_reserva = value;
+	private void setORM_Reserva(java.util.Set value) {
+		this.ORM_reserva = value;
 	}
 	
-	private java.util.Set getORM_Hora_medica_reserva() {
-		return ORM_hora_medica_reserva;
+	private java.util.Set getORM_Reserva() {
+		return ORM_reserva;
 	}
 	
 	@Transient	
-	public final orm.ReservaSetCollection hora_medica_reserva = new orm.ReservaSetCollection(this, _ormAdapter, orm.ORMConstants.KEY_HORA_MEDICA_HORA_MEDICA_RESERVA, orm.ORMConstants.KEY_RESERVA_HORA_MEDICAS, orm.ORMConstants.KEY_MUL_MANY_TO_MANY);
+	public final orm.ReservaSetCollection reserva = new orm.ReservaSetCollection(this, _ormAdapter, orm.ORMConstants.KEY_HORA_MEDICA_RESERVA, orm.ORMConstants.KEY_RESERVA_HORA_MEDICA, orm.ORMConstants.KEY_MUL_MANY_TO_MANY);
+	
+	public void setHora_medica_visita_openmrs(orm.Hora_medica_visita_openmrs value) {
+		if (this.hora_medica_visita_openmrs != value) {
+			orm.Hora_medica_visita_openmrs lhora_medica_visita_openmrs = this.hora_medica_visita_openmrs;
+			this.hora_medica_visita_openmrs = value;
+			if (value != null) {
+				hora_medica_visita_openmrs.setHora_medica(this);
+			}
+			if (lhora_medica_visita_openmrs != null) {
+				lhora_medica_visita_openmrs.setHora_medica(null);
+			}
+		}
+	}
+	
+	public orm.Hora_medica_visita_openmrs getHora_medica_visita_openmrs() {
+		return hora_medica_visita_openmrs;
+	}
+	
+	public void setHora_medica_aps_encuentro_openmrs(orm.Hora_medica_aps_encuentro_openmrs value) {
+		if (this.hora_medica_aps_encuentro_openmrs != value) {
+			orm.Hora_medica_aps_encuentro_openmrs lhora_medica_aps_encuentro_openmrs = this.hora_medica_aps_encuentro_openmrs;
+			this.hora_medica_aps_encuentro_openmrs = value;
+			if (value != null) {
+				hora_medica_aps_encuentro_openmrs.setHora_medica(this);
+			}
+			if (lhora_medica_aps_encuentro_openmrs != null) {
+				lhora_medica_aps_encuentro_openmrs.setHora_medica(null);
+			}
+		}
+	}
+	
+	public orm.Hora_medica_aps_encuentro_openmrs getHora_medica_aps_encuentro_openmrs() {
+		return hora_medica_aps_encuentro_openmrs;
+	}
 	
 	public String toString() {
 		return String.valueOf(getId());

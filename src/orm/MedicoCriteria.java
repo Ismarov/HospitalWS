@@ -25,6 +25,8 @@ public class MedicoCriteria extends AbstractORMCriteria {
 	public final IntegerExpression especialidadId;
 	public final AssociationExpression especialidad;
 	public final CollectionExpression hora_medica;
+	public final IntegerExpression proveedor_openmrsId;
+	public final AssociationExpression proveedor_openmrs;
 	
 	public MedicoCriteria(Criteria criteria) {
 		super(criteria);
@@ -34,6 +36,8 @@ public class MedicoCriteria extends AbstractORMCriteria {
 		especialidadId = new IntegerExpression("especialidad.id", this);
 		especialidad = new AssociationExpression("especialidad", this);
 		hora_medica = new CollectionExpression("ORM_hora_medica", this);
+		proveedor_openmrsId = new IntegerExpression("proveedor_openmrs.id", this);
+		proveedor_openmrs = new AssociationExpression("proveedor_openmrs", this);
 	}
 	
 	public MedicoCriteria(PersistentSession session) {
@@ -54,6 +58,10 @@ public class MedicoCriteria extends AbstractORMCriteria {
 	
 	public Hora_medicaCriteria createHora_medicaCriteria() {
 		return new Hora_medicaCriteria(createCriteria("ORM_hora_medica"));
+	}
+	
+	public Proveedor_openmrsCriteria createProveedor_openmrsCriteria() {
+		return new Proveedor_openmrsCriteria(createCriteria("proveedor_openmrs"));
 	}
 	
 	public Medico uniqueMedico() {

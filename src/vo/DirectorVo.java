@@ -9,16 +9,16 @@ public class DirectorVo {
 		this.id = id;
 		this.personavo = director_personavo;
 	}
-	
-	public int getId(){
+
+	public int getId() {
 		return this.id;
 	}
 
 	public PersonaVo getPersonaVo() {
 		return personavo;
 	}
-	
-	public static DirectorVo fromORM(orm.Director d){
+
+	public static DirectorVo fromORM(orm.Director d) {
 		PersonaVo p = PersonaVo.fromORM(d.getPersona());
 		DirectorVo di = new DirectorVo(d.getId(), p);
 		return di;

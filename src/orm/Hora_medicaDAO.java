@@ -331,10 +331,18 @@ public class Hora_medicaDAO {
 				hora_medica.getBox().hora_medica.remove(hora_medica);
 			}
 			
-			orm.Reserva[] lHora_medica_reservas = hora_medica.hora_medica_reserva.toArray();
-			for(int i = 0; i < lHora_medica_reservas.length; i++) {
-				lHora_medica_reservas[i].hora_medicas.remove(hora_medica);
+			orm.Reserva[] lReservas = hora_medica.reserva.toArray();
+			for(int i = 0; i < lReservas.length; i++) {
+				lReservas[i].hora_medica.remove(hora_medica);
 			}
+			if(hora_medica.getHora_medica_visita_openmrs() != null) {
+				hora_medica.getHora_medica_visita_openmrs().setHora_medica(null);
+			}
+			
+			if(hora_medica.getHora_medica_aps_encuentro_openmrs() != null) {
+				hora_medica.getHora_medica_aps_encuentro_openmrs().setHora_medica(null);
+			}
+			
 			return delete(hora_medica);
 		}
 		catch(Exception e) {
@@ -353,10 +361,18 @@ public class Hora_medicaDAO {
 				hora_medica.getBox().hora_medica.remove(hora_medica);
 			}
 			
-			orm.Reserva[] lHora_medica_reservas = hora_medica.hora_medica_reserva.toArray();
-			for(int i = 0; i < lHora_medica_reservas.length; i++) {
-				lHora_medica_reservas[i].hora_medicas.remove(hora_medica);
+			orm.Reserva[] lReservas = hora_medica.reserva.toArray();
+			for(int i = 0; i < lReservas.length; i++) {
+				lReservas[i].hora_medica.remove(hora_medica);
 			}
+			if(hora_medica.getHora_medica_visita_openmrs() != null) {
+				hora_medica.getHora_medica_visita_openmrs().setHora_medica(null);
+			}
+			
+			if(hora_medica.getHora_medica_aps_encuentro_openmrs() != null) {
+				hora_medica.getHora_medica_aps_encuentro_openmrs().setHora_medica(null);
+			}
+			
 			try {
 				session.delete(hora_medica);
 				return true;

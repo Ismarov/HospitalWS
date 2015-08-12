@@ -73,6 +73,38 @@ public class ListHospitaldb2Data {
 		}
 		System.out.println(length + " record(s) retrieved.");
 		
+		System.out.println("Listing Paciente_openmrs...");
+		orm.Paciente_openmrs[] ormPaciente_openmrses = orm.Paciente_openmrsDAO.listPaciente_openmrsByQuery(null, null);
+		length = Math.min(ormPaciente_openmrses.length, ROW_COUNT);
+		for (int i = 0; i < length; i++) {
+			System.out.println(ormPaciente_openmrses[i]);
+		}
+		System.out.println(length + " record(s) retrieved.");
+		
+		System.out.println("Listing Hora_medica_aps_encuentro_openmrs...");
+		orm.Hora_medica_aps_encuentro_openmrs[] ormHora_medica_aps_encuentro_openmrses = orm.Hora_medica_aps_encuentro_openmrsDAO.listHora_medica_aps_encuentro_openmrsByQuery(null, null);
+		length = Math.min(ormHora_medica_aps_encuentro_openmrses.length, ROW_COUNT);
+		for (int i = 0; i < length; i++) {
+			System.out.println(ormHora_medica_aps_encuentro_openmrses[i]);
+		}
+		System.out.println(length + " record(s) retrieved.");
+		
+		System.out.println("Listing Hora_medica_visita_openmrs...");
+		orm.Hora_medica_visita_openmrs[] ormHora_medica_visita_openmrses = orm.Hora_medica_visita_openmrsDAO.listHora_medica_visita_openmrsByQuery(null, null);
+		length = Math.min(ormHora_medica_visita_openmrses.length, ROW_COUNT);
+		for (int i = 0; i < length; i++) {
+			System.out.println(ormHora_medica_visita_openmrses[i]);
+		}
+		System.out.println(length + " record(s) retrieved.");
+		
+		System.out.println("Listing Proveedor_openmrs...");
+		orm.Proveedor_openmrs[] ormProveedor_openmrses = orm.Proveedor_openmrsDAO.listProveedor_openmrsByQuery(null, null);
+		length = Math.min(ormProveedor_openmrses.length, ROW_COUNT);
+		for (int i = 0; i < length; i++) {
+			System.out.println(ormProveedor_openmrses[i]);
+		}
+		System.out.println(length + " record(s) retrieved.");
+		
 	}
 	
 	public void listByCriteria() throws PersistentException {
@@ -171,6 +203,54 @@ public class ListHospitaldb2Data {
 			 System.out.println(ormBoxs[i]);
 		}
 		System.out.println(length + " Box record(s) retrieved."); 
+		
+		System.out.println("Listing Paciente_openmrs by Criteria...");
+		orm.Paciente_openmrsCriteria lormPaciente_openmrsCriteria = new orm.Paciente_openmrsCriteria();
+		// Please uncomment the follow line and fill in parameter(s) 
+		//lormPaciente_openmrsCriteria.id.eq();
+		lormPaciente_openmrsCriteria.setMaxResults(ROW_COUNT);
+		orm.Paciente_openmrs[] ormPaciente_openmrses = lormPaciente_openmrsCriteria.listPaciente_openmrs();
+		length =ormPaciente_openmrses== null ? 0 : Math.min(ormPaciente_openmrses.length, ROW_COUNT); 
+		for (int i = 0; i < length; i++) {
+			 System.out.println(ormPaciente_openmrses[i]);
+		}
+		System.out.println(length + " Paciente_openmrs record(s) retrieved."); 
+		
+		System.out.println("Listing Hora_medica_aps_encuentro_openmrs by Criteria...");
+		orm.Hora_medica_aps_encuentro_openmrsCriteria lormHora_medica_aps_encuentro_openmrsCriteria = new orm.Hora_medica_aps_encuentro_openmrsCriteria();
+		// Please uncomment the follow line and fill in parameter(s) 
+		//lormHora_medica_aps_encuentro_openmrsCriteria.id.eq();
+		lormHora_medica_aps_encuentro_openmrsCriteria.setMaxResults(ROW_COUNT);
+		orm.Hora_medica_aps_encuentro_openmrs[] ormHora_medica_aps_encuentro_openmrses = lormHora_medica_aps_encuentro_openmrsCriteria.listHora_medica_aps_encuentro_openmrs();
+		length =ormHora_medica_aps_encuentro_openmrses== null ? 0 : Math.min(ormHora_medica_aps_encuentro_openmrses.length, ROW_COUNT); 
+		for (int i = 0; i < length; i++) {
+			 System.out.println(ormHora_medica_aps_encuentro_openmrses[i]);
+		}
+		System.out.println(length + " Hora_medica_aps_encuentro_openmrs record(s) retrieved."); 
+		
+		System.out.println("Listing Hora_medica_visita_openmrs by Criteria...");
+		orm.Hora_medica_visita_openmrsCriteria lormHora_medica_visita_openmrsCriteria = new orm.Hora_medica_visita_openmrsCriteria();
+		// Please uncomment the follow line and fill in parameter(s) 
+		//lormHora_medica_visita_openmrsCriteria.id.eq();
+		lormHora_medica_visita_openmrsCriteria.setMaxResults(ROW_COUNT);
+		orm.Hora_medica_visita_openmrs[] ormHora_medica_visita_openmrses = lormHora_medica_visita_openmrsCriteria.listHora_medica_visita_openmrs();
+		length =ormHora_medica_visita_openmrses== null ? 0 : Math.min(ormHora_medica_visita_openmrses.length, ROW_COUNT); 
+		for (int i = 0; i < length; i++) {
+			 System.out.println(ormHora_medica_visita_openmrses[i]);
+		}
+		System.out.println(length + " Hora_medica_visita_openmrs record(s) retrieved."); 
+		
+		System.out.println("Listing Proveedor_openmrs by Criteria...");
+		orm.Proveedor_openmrsCriteria lormProveedor_openmrsCriteria = new orm.Proveedor_openmrsCriteria();
+		// Please uncomment the follow line and fill in parameter(s) 
+		//lormProveedor_openmrsCriteria.id.eq();
+		lormProveedor_openmrsCriteria.setMaxResults(ROW_COUNT);
+		orm.Proveedor_openmrs[] ormProveedor_openmrses = lormProveedor_openmrsCriteria.listProveedor_openmrs();
+		length =ormProveedor_openmrses== null ? 0 : Math.min(ormProveedor_openmrses.length, ROW_COUNT); 
+		for (int i = 0; i < length; i++) {
+			 System.out.println(ormProveedor_openmrses[i]);
+		}
+		System.out.println(length + " Proveedor_openmrs record(s) retrieved."); 
 		
 	}
 	

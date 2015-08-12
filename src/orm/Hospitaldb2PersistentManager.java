@@ -44,6 +44,10 @@ public class Hospitaldb2PersistentManager extends PersistentManager {
 		configuration.addAnnotatedClass(orm.Reserva.class);
 		configuration.addAnnotatedClass(orm.Hora_medica.class);
 		configuration.addAnnotatedClass(orm.Box.class);
+		configuration.addAnnotatedClass(orm.Paciente_openmrs.class);
+		configuration.addAnnotatedClass(orm.Hora_medica_aps_encuentro_openmrs.class);
+		configuration.addAnnotatedClass(orm.Hora_medica_visita_openmrs.class);
+		configuration.addAnnotatedClass(orm.Proveedor_openmrs.class);
 		configuration.buildMappings();
 		return configuration;
 	}

@@ -33,6 +33,18 @@ public class RetrieveAndUpdateHospitaldb2Data {
 			orm.Box lormBox = orm.BoxDAO.loadBoxByQuery(null, null);
 			// Update the properties of the persistent object
 			orm.BoxDAO.save(lormBox);
+			orm.Paciente_openmrs lormPaciente_openmrs = orm.Paciente_openmrsDAO.loadPaciente_openmrsByQuery(null, null);
+			// Update the properties of the persistent object
+			orm.Paciente_openmrsDAO.save(lormPaciente_openmrs);
+			orm.Hora_medica_aps_encuentro_openmrs lormHora_medica_aps_encuentro_openmrs = orm.Hora_medica_aps_encuentro_openmrsDAO.loadHora_medica_aps_encuentro_openmrsByQuery(null, null);
+			// Update the properties of the persistent object
+			orm.Hora_medica_aps_encuentro_openmrsDAO.save(lormHora_medica_aps_encuentro_openmrs);
+			orm.Hora_medica_visita_openmrs lormHora_medica_visita_openmrs = orm.Hora_medica_visita_openmrsDAO.loadHora_medica_visita_openmrsByQuery(null, null);
+			// Update the properties of the persistent object
+			orm.Hora_medica_visita_openmrsDAO.save(lormHora_medica_visita_openmrs);
+			orm.Proveedor_openmrs lormProveedor_openmrs = orm.Proveedor_openmrsDAO.loadProveedor_openmrsByQuery(null, null);
+			// Update the properties of the persistent object
+			orm.Proveedor_openmrsDAO.save(lormProveedor_openmrs);
 			t.commit();
 		}
 		catch (Exception e) {
@@ -89,6 +101,30 @@ public class RetrieveAndUpdateHospitaldb2Data {
 		// Please uncomment the follow line and fill in parameter(s)
 		//lormBoxCriteria.id.eq();
 		System.out.println(lormBoxCriteria.uniqueBox());
+		
+		System.out.println("Retrieving Paciente_openmrs by Paciente_openmrsCriteria");
+		orm.Paciente_openmrsCriteria lormPaciente_openmrsCriteria = new orm.Paciente_openmrsCriteria();
+		// Please uncomment the follow line and fill in parameter(s)
+		//lormPaciente_openmrsCriteria.id.eq();
+		System.out.println(lormPaciente_openmrsCriteria.uniquePaciente_openmrs());
+		
+		System.out.println("Retrieving Hora_medica_aps_encuentro_openmrs by Hora_medica_aps_encuentro_openmrsCriteria");
+		orm.Hora_medica_aps_encuentro_openmrsCriteria lormHora_medica_aps_encuentro_openmrsCriteria = new orm.Hora_medica_aps_encuentro_openmrsCriteria();
+		// Please uncomment the follow line and fill in parameter(s)
+		//lormHora_medica_aps_encuentro_openmrsCriteria.id.eq();
+		System.out.println(lormHora_medica_aps_encuentro_openmrsCriteria.uniqueHora_medica_aps_encuentro_openmrs());
+		
+		System.out.println("Retrieving Hora_medica_visita_openmrs by Hora_medica_visita_openmrsCriteria");
+		orm.Hora_medica_visita_openmrsCriteria lormHora_medica_visita_openmrsCriteria = new orm.Hora_medica_visita_openmrsCriteria();
+		// Please uncomment the follow line and fill in parameter(s)
+		//lormHora_medica_visita_openmrsCriteria.id.eq();
+		System.out.println(lormHora_medica_visita_openmrsCriteria.uniqueHora_medica_visita_openmrs());
+		
+		System.out.println("Retrieving Proveedor_openmrs by Proveedor_openmrsCriteria");
+		orm.Proveedor_openmrsCriteria lormProveedor_openmrsCriteria = new orm.Proveedor_openmrsCriteria();
+		// Please uncomment the follow line and fill in parameter(s)
+		//lormProveedor_openmrsCriteria.id.eq();
+		System.out.println(lormProveedor_openmrsCriteria.uniqueProveedor_openmrs());
 		
 	}
 	

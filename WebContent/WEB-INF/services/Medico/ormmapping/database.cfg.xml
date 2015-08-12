@@ -248,7 +248,7 @@
     <DriverClass>com.mysql.jdbc.Driver</DriverClass>
     <URL>jdbc:mysql://localhost:3306/hospital_sc</URL>
     <UserName>root</UserName>
-    <Password>toor</Password>
+    <Password>1234</Password>
     <HostName>localhost</HostName>
     <PortNO>3306</PortNO>
     <DBName>hospital_sc</DBName>

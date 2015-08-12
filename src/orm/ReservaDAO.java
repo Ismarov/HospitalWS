@@ -331,9 +331,9 @@ public class ReservaDAO {
 				reserva.getPaciente().reserva.remove(reserva);
 			}
 			
-			orm.Hora_medica[] lHora_medicass = reserva.hora_medicas.toArray();
-			for(int i = 0; i < lHora_medicass.length; i++) {
-				lHora_medicass[i].hora_medica_reserva.remove(reserva);
+			orm.Hora_medica[] lHora_medicas = reserva.hora_medica.toArray();
+			for(int i = 0; i < lHora_medicas.length; i++) {
+				lHora_medicas[i].reserva.remove(reserva);
 			}
 			return delete(reserva);
 		}
@@ -353,9 +353,9 @@ public class ReservaDAO {
 				reserva.getPaciente().reserva.remove(reserva);
 			}
 			
-			orm.Hora_medica[] lHora_medicass = reserva.hora_medicas.toArray();
-			for(int i = 0; i < lHora_medicass.length; i++) {
-				lHora_medicass[i].hora_medica_reserva.remove(reserva);
+			orm.Hora_medica[] lHora_medicas = reserva.hora_medica.toArray();
+			for(int i = 0; i < lHora_medicas.length; i++) {
+				lHora_medicas[i].reserva.remove(reserva);
 			}
 			try {
 				session.delete(reserva);

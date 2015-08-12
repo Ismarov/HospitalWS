@@ -23,8 +23,8 @@ public class Reserva implements Serializable {
 	}
 	
 	private java.util.Set this_getSet (int key) {
-		if (key == orm.ORMConstants.KEY_RESERVA_HORA_MEDICAS) {
-			return ORM_hora_medicas;
+		if (key == orm.ORMConstants.KEY_RESERVA_HORA_MEDICA) {
+			return ORM_hora_medica;
 		}
 		
 		return null;
@@ -65,14 +65,14 @@ public class Reserva implements Serializable {
 	
 	@ManyToOne(targetEntity=orm.Paciente.class, fetch=FetchType.LAZY)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
-	@JoinColumns({ @JoinColumn(name="paciente_id", referencedColumnName="id", nullable=false) })	
+	@JoinColumns({ @JoinColumn(name="pacienteid", referencedColumnName="id") })	
 	private orm.Paciente paciente;
 	
 	@ManyToMany(targetEntity=orm.Hora_medica.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinTable(name="hora_medica_reserva", joinColumns={ @JoinColumn(name="reserva_id") }, inverseJoinColumns={ @JoinColumn(name="hora_medica_id") })	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
-	private java.util.Set ORM_hora_medicas = new java.util.HashSet();
+	private java.util.Set ORM_hora_medica = new java.util.HashSet();
 	
 	private void setId(int value) {
 		this.id = value;
@@ -85,6 +85,17 @@ public class Reserva implements Serializable {
 	public int getORMID() {
 		return getId();
 	}
+	
+	private void setORM_Hora_medica(java.util.Set value) {
+		this.ORM_hora_medica = value;
+	}
+	
+	private java.util.Set getORM_Hora_medica() {
+		return ORM_hora_medica;
+	}
+	
+	@Transient	
+	public final orm.Hora_medicaSetCollection hora_medica = new orm.Hora_medicaSetCollection(this, _ormAdapter, orm.ORMConstants.KEY_RESERVA_HORA_MEDICA, orm.ORMConstants.KEY_HORA_MEDICA_RESERVA, orm.ORMConstants.KEY_MUL_MANY_TO_MANY);
 	
 	public void setPersona(orm.Persona value) {
 		if (persona != null) {
@@ -133,17 +144,6 @@ public class Reserva implements Serializable {
 	private orm.Paciente getORM_Paciente() {
 		return paciente;
 	}
-	
-	private void setORM_Hora_medicas(java.util.Set value) {
-		this.ORM_hora_medicas = value;
-	}
-	
-	private java.util.Set getORM_Hora_medicas() {
-		return ORM_hora_medicas;
-	}
-	
-	@Transient	
-	public final orm.Hora_medicaSetCollection hora_medicas = new orm.Hora_medicaSetCollection(this, _ormAdapter, orm.ORMConstants.KEY_RESERVA_HORA_MEDICAS, orm.ORMConstants.KEY_HORA_MEDICA_HORA_MEDICA_RESERVA, orm.ORMConstants.KEY_MUL_MANY_TO_MANY);
 	
 	public String toString() {
 		return String.valueOf(getId());

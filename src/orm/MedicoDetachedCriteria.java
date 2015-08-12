@@ -25,6 +25,8 @@ public class MedicoDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final IntegerExpression especialidadId;
 	public final AssociationExpression especialidad;
 	public final CollectionExpression hora_medica;
+	public final IntegerExpression proveedor_openmrsId;
+	public final AssociationExpression proveedor_openmrs;
 	
 	public MedicoDetachedCriteria() {
 		super(orm.Medico.class, orm.MedicoCriteria.class);
@@ -34,6 +36,8 @@ public class MedicoDetachedCriteria extends AbstractORMDetachedCriteria {
 		especialidadId = new IntegerExpression("especialidad.id", this.getDetachedCriteria());
 		especialidad = new AssociationExpression("especialidad", this.getDetachedCriteria());
 		hora_medica = new CollectionExpression("ORM_hora_medica", this.getDetachedCriteria());
+		proveedor_openmrsId = new IntegerExpression("proveedor_openmrs.id", this.getDetachedCriteria());
+		proveedor_openmrs = new AssociationExpression("proveedor_openmrs", this.getDetachedCriteria());
 	}
 	
 	public MedicoDetachedCriteria(DetachedCriteria aDetachedCriteria) {
@@ -44,6 +48,8 @@ public class MedicoDetachedCriteria extends AbstractORMDetachedCriteria {
 		especialidadId = new IntegerExpression("especialidad.id", this.getDetachedCriteria());
 		especialidad = new AssociationExpression("especialidad", this.getDetachedCriteria());
 		hora_medica = new CollectionExpression("ORM_hora_medica", this.getDetachedCriteria());
+		proveedor_openmrsId = new IntegerExpression("proveedor_openmrs.id", this.getDetachedCriteria());
+		proveedor_openmrs = new AssociationExpression("proveedor_openmrs", this.getDetachedCriteria());
 	}
 	
 	public PersonaDetachedCriteria createPersonaCriteria() {
@@ -56,6 +62,10 @@ public class MedicoDetachedCriteria extends AbstractORMDetachedCriteria {
 	
 	public Hora_medicaDetachedCriteria createHora_medicaCriteria() {
 		return new Hora_medicaDetachedCriteria(createCriteria("ORM_hora_medica"));
+	}
+	
+	public Proveedor_openmrsDetachedCriteria createProveedor_openmrsCriteria() {
+		return new Proveedor_openmrsDetachedCriteria(createCriteria("proveedor_openmrs"));
 	}
 	
 	public Medico uniqueMedico(PersistentSession session) {
