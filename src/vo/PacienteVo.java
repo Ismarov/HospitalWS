@@ -1,5 +1,12 @@
 package vo;
 
+/**
+ * 
+ * Clase PacienteVo
+ * Genera un VO de Paciente con los datos de Paciente, constructor con parámetros, 
+ * getters y método para usar con ORM.
+ *
+ */
 public class PacienteVo {
 	private int id;
 	private PersonaVo personavo;

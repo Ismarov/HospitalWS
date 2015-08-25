@@ -2,6 +2,13 @@ package vo;
 
 import java.util.Date;
 
+/**
+ * 
+ * Clase PersonaVo
+ * Genera un VO de Persona con los datos de Persona, constructor con parámetros, 
+ * getters y método para usar con ORM.
+ *
+ */
 public class PersonaVo {
 	private int id;
 	private String nombres;

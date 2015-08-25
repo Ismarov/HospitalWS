@@ -29,7 +29,7 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.filter.LoggingFilter;
 
 /**
- * Helper class for making REST calls
+ * RestClient Clase Helper para la generación del Cliente REST
  */
 public class RestClient {
 
@@ -50,6 +50,8 @@ public class RestClient {
 
 	class MyAuthenticator extends Authenticator {
 		/**
+		 * MyAuthenticator, autentificador de java
+		 * 
 		 * @see java.net.Authenticator#getPasswordAuthentication()
 		 */
 		private String username;
@@ -71,10 +73,6 @@ public class RestClient {
 		return client.resource(this.serverUrl);
 	}
 
-	private WebResource getPatientResource() {
-		return getRootResource().path("patient");
-	}
-
 	public boolean login() throws Exception {
 		/*
 		 * String resultString =
@@ -89,11 +87,15 @@ public class RestClient {
 		return true;
 	}
 
-	/*
-	 * handleResultList Query de lista de argumentos, recibe el recurso
-	 * (patient, person, encounter, visit), argumento (?q), y la consulta (john)
-	 * y devuelve una lista de handeResultList
+	/**
+	 * handleResultList
+	 * 
+	 * @param Query
+	 *            de lista de argumentos, recibe el recurso (patient, person,
+	 *            encounter, visit), argumento (?q), y la consulta (john)
+	 * @return Lista de handeResultList
 	 */
+
 	public List<Map<String, Object>> listQuery(String resourceName,
 			String queryParamName, String query) throws Exception {
 		String result = getRootResource().path(resourceName)
@@ -102,9 +104,13 @@ public class RestClient {
 		return handleResultList(result);
 	}
 
-	/*
-	 * getResource Recibe un nombre de recurso (patient, person, encounter,
-	 * visit), y un uuid, y devuelve un resultado de HandleJsonObject
+	/**
+	 * getResource
+	 * 
+	 * @param Recibe
+	 *            un nombre de recurso (patient, person, encounter, visit), y un
+	 *            UUID.
+	 * @return Devuelve un resultado de tipo HandleJsonObject.
 	 */
 	public Map<String, Object> getResource(String resourceName, String uuid)
 			throws Exception {
@@ -113,27 +119,41 @@ public class RestClient {
 		return handleJsonObject(result);
 	}
 
-	/*
-	 * handleJsonObject Recibe un String json y lo devuelve como mapa de
-	 * simpleObjects
+	/**
+	 * handleJsonObject
+	 * 
+	 * @param Recibe
+	 *            un String JSON
+	 * @return Devuelve el JSON como mapa de simpleObjects.
 	 */
 	public Map<String, Object> handleJsonObject(String json) throws Exception {
 		return new ObjectMapper().readValue(json, SimpleObject.class);
 	}
 
-	/*
-	 * handleResultList Recibe una lista de json y devuelve una lista de objects
+	/**
+	 * handleResultList
+	 * 
+	 * @param Recibe
+	 *            una lista de JSON
+	 * @return Devuelve una lista de tipo Map clave/valor.
 	 */
+
+	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> handleResultList(String json)
 			throws Exception {
 		Map<String, Object> object = handleJsonObject(json);
 		return (List<Map<String, Object>>) object.get("results");
 	}
 
-	/*
-	 * post Recibe un resource (patient, person, encounter, visit), y un map de
-	 * propiedades (clave - valor)
+	/**
+	 * post
+	 * 
+	 * @param Recibe
+	 *            un resource (patient, person, encounter, visit), y un map de
+	 *            propiedades (clave - valor).
+	 * @returns Mapa clave valor.
 	 */
+
 	public Map<String, Object> post(String resource,
 			Map<String, Object> properties) throws Exception {
 		String json = "";

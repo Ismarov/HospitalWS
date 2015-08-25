@@ -2,6 +2,13 @@ package vo;
 
 import java.util.Date;
 
+/**
+ * 
+ * Clase HoraMedicaVo
+ * Genera un VO de HoraMedica con los datos de HoraMedica, constructor con parámetros, 
+ * getters y método para usar con ORM.
+ *
+ */
 public class HoraMedicaVo {
 	private int id;
 	private MedicoVo medicovo;

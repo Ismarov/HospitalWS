@@ -1,15 +1,13 @@
 package cliente;
 
-import java.sql.Timestamp;
-import java.util.Date;
+//import java.sql.Timestamp;
+//import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.orm.PersistentException;
 
-//import com.google.gson.Gson;
-
-import orm.Paciente;
+//import orm.Paciente;
 import vo.MedicoVo;
 import vo.PacienteVo;
 import vo.PersonaVo;
@@ -17,32 +15,80 @@ import cliente.RestClient;
 import cliente.SimpleObject;
 import bussines.Director;
 
+/**
+ * Constructor para el cliente Rest PersonOpenMRS Usará las credenciales de
+ * nuestra Api REST OpenMRS Posteriormente, hacemos un objeto Director y un
+ * objeto PersonaVo.
+ **/
+
 public class PersonOpenMRS {
-	RestClient rc = new RestClient("admin", "Admin1234",
-			"http://localhost:8080/openmrs1/ws/rest/v1");
+	RestClient rc = new RestClient("admin", "test",
+			"http://localhost:8080/openmrs/ws/rest/v1");
 
 	Director dir = new Director();
 	PersonaVo p = new PersonaVo();
 
-	/*
-	 * names.add("givenName", "lucho"); names.add("familyName","Smith");
-	 * person.add("gender", "M").add("names", new SimpleObject[]{names});
+	/**
+	 * Método ingresarPersonaORMS, ingresa una Persona a OpenMRS
+	 * 
+	 * @param p
+	 *            La Persona que recibiremos e ingresamos a través de la Api
+	 *            REST
+	 * @return String uuid generado por OpenMRS al ingresar a la Persona
+	 * 
 	 */
+	private String ingresarPersonaORMS(PersonaVo p) {
+		// Genera dos SimpleObject, que servirán de lista más adelante para el JSON de la
+		// Api REST
+		SimpleObject names = new SimpleObject();
+		SimpleObject person = new SimpleObject();
+		// Extrae los nombres, apellidos, sexo y los añade al SimpleObject
+		names.add("givenName", p.getNombres()).add("familyName",
+				p.getApellidos());
+		person.add("gender", "M").add("names", new SimpleObject[] { names });
+	
+		try {
+			// Generamos este Array de String, Object (JSON Anidado)
+			Map<String, Object> mapa = new HashMap<String, Object>();
+			// Intentamos postearlo con el cliente REST
+			mapa = rc.post("person", person);
+			String uuid = mapa.get("uuid").toString();
+			// Retornamos el UUID
+			return uuid;
+	
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 
+	/**
+	 * Método ingresarPacienteORMS, ingresa un Paciente a OpenMRS
+	 * 
+	 * @param p
+	 *            El Paciente que recibiremos e ingresamos a través de la Api
+	 *            REST, verificando su UUID de Persona
+	 * @return boolean True en caso de ingreso exitoso, de lo contrario, false.
+	 * 
+	 */
 	public boolean ingresarPacienteORMS(PacienteVo p)
 			throws PersistentException {
-		// falta sacar el id de nuestra bd
+		// Genera dos SimpleObject, que servirán de lista más adelante para el JSON de la
+		// Api REST
 		SimpleObject patient = new SimpleObject();
 		SimpleObject identifiers = new SimpleObject();
-
-		int pers_id = p.getPersonavo().getId();
-		int pac_id = p.getId();
-
+		// Extraemos las Id del paciente y la persona correspondiente
+		//int pers_id = p.getPersonavo().getId();
+		//int pac_id = p.getId();
+		// Para setear la Id de la persona al UUID correspondiente a OpenMRS
 		String pers_uuid = this.ingresarPersonaORMS(p.getPersonavo());
 		String pat_uuid = null;
-
+		// Si la UUID no es nula (no falló la extracción de Id):
 		if (pers_uuid != null) {
-
+			// Generamos el JSON para el ingreso del paciente, seteando su Id,
+			// Identificador de tipo Paciente, Localización por defecto, y
+			// preferencia
 			identifiers
 					.add("identifier", String.valueOf(p.getId()))
 					.add("identifierType",
@@ -51,9 +97,9 @@ public class PersonOpenMRS {
 					.add("preferred", true);
 			patient.add("person", pers_uuid).add("identifiers",
 					new SimpleObject[] { identifiers });
-
+			// Generamos este Array de String, Object (JSON Anidado)
 			Map<String, Object> result = new HashMap<String, Object>();
-
+			// Intentamos postearlo con el cliente REST
 			try {
 				result = rc.post("patient", patient);
 				pat_uuid = result.get("uuid").toString();
@@ -62,15 +108,17 @@ public class PersonOpenMRS {
 				e.printStackTrace();
 			}
 		}
-
+		// Si ahora existe la UUID de Persona y Paciente:
 		if (pers_uuid != null && pat_uuid != null) {
+			// Verificamos si la Id es concordante con el UUID de la Persona
 			orm.Paciente_openmrs patOrms = new orm.Paciente_openmrs();
 			orm.PacienteCriteria pc = new orm.PacienteCriteria();
 
-			// Buscar el paciente con id p.getId()
+			// Busca el paciente con id p.getId()
 			pc.personaId.eq(p.getId());
 
-			// Busca un solo registro de paciente concordante con el criterio
+			// Busca un solo registro de Paciente concordante con el criteria de
+			// Hibernate (Id)
 
 			Object pacienteResult = pc.uniqueResult();
 			// Si el resultado es distinto de null:
@@ -78,28 +126,41 @@ public class PersonOpenMRS {
 				orm.Paciente paciente = (orm.Paciente) pacienteResult;
 				patOrms.setUuid(pat_uuid);
 
-				// Pasar ese orm.Paciente en lugar de null
+				// Persistimos este Paciente, ya que ya ha sido ingresado en
+				// OpenMRS
 				patOrms.setPaciente(paciente);
+				orm.Paciente_openmrsDAO.save(patOrms);
 			}
-			orm.Paciente_openmrsDAO.save(patOrms);
 		}
 
 		return false;
 	}
 
+	/**
+	 * Método ingresarMedicoORMS, ingresa un Médico a OpenMRS
+	 * 
+	 * @param p
+	 *            El médico que recibiremos e ingresamos a través de la Api REST
+	 * @return boolean True en caso de ingreso exitoso, de lo contrario, false.
+	 * 
+	 */
 	public boolean ingresarMedicoORMS(MedicoVo m) throws PersistentException {
-		// falta sacar el id de nuestra bd
+		// Genera dos SimpleObject, que servirán de lista más adelante para el JSON de la
+		// Api REST
 		SimpleObject provider = new SimpleObject();
 		SimpleObject identifiers = new SimpleObject();
-
-		int pers_id = m.getPersona().getId();
-		int med_id = m.getId();
+		// Extraemos las Id del Médico y la persona correspondiente
+		//int pers_id = m.getPersona().getId();
+		//int med_id = m.getId();
+		// Para setear la Id de la persona al UUID correspondiente a OpenMRS
 
 		String pers_uuid = this.ingresarPersonaORMS(m.getPersona());
 		String med_uuid = null;
+		// Si la UUID no es nula (no falló la extracción de Id):
 
 		if (pers_uuid != null) {
-
+			// Generamos el JSON para el ingreso del Médico, seteando su Id,
+			// e Identificadores
 			identifiers
 					.add("identifier", String.valueOf(m.getId()))
 					.add("providerattributetype",
@@ -108,8 +169,11 @@ public class PersonOpenMRS {
 					.add("retired", false);
 			provider.add("person", pers_uuid).add("identifiers",
 					new SimpleObject[] { identifiers });
+			// Generamos este Array de String, Object (JSON Anidado)
 
 			Map<String, Object> result = new HashMap<String, Object>();
+
+			// Intentamos postearlo con el cliente REST
 
 			try {
 				result = rc.post("provider", provider);
@@ -119,15 +183,16 @@ public class PersonOpenMRS {
 				e.printStackTrace();
 			}
 		}
+		// Si ahora existe la UUID de Persona y Médico:
 
 		if (pers_uuid != null && med_uuid != null) {
 			orm.Proveedor_openmrs medOrms = new orm.Proveedor_openmrs();
 			orm.MedicoCriteria mc = new orm.MedicoCriteria();
 
-			// Buscar el paciente con id p.getId()
+			// Buscar el Médico con id p.getId()
 			mc.personaId.eq(p.getId());
 
-			// Busca un solo registro de paciente concordante con el criterio
+			// Busca un solo registro de Médico concordante con el criterio
 
 			Object medicoResult = mc.uniqueResult();
 			// Si el resultado es distinto de null:
@@ -135,34 +200,14 @@ public class PersonOpenMRS {
 				orm.Medico medico = (orm.Medico) medicoResult;
 				medOrms.setUuid(med_uuid);
 
-				// Pasar ese orm.Paciente en lugar de null
+				// Persistimos este Médico, ya que ya ha sido ingresado en
+				// OpenMRS
 				medOrms.setMedico(medico);
 			}
 			orm.Proveedor_openmrsDAO.save(medOrms);
 		}
 
 		return false;
-	}
-
-	private String ingresarPersonaORMS(PersonaVo p) {
-		SimpleObject names = new SimpleObject();
-		SimpleObject person = new SimpleObject();
-
-		names.add("givenName", p.getNombres()).add("familyName",
-				p.getApellidos());
-		person.add("gender", "M").add("names", new SimpleObject[] { names });
-
-		try {
-			Map<String, Object> mapa = new HashMap<String, Object>();
-			mapa = rc.post("person", person);
-			String uuid = mapa.get("uuid").toString();
-			return uuid;
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
 	}
 
 }

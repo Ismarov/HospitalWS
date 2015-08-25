@@ -9,13 +9,31 @@ import org.orm.PersistentException;
 
 import orm.Hora_medicaCriteria;
 import vo.HoraMedicaVo;
-import vo.MedicoVo;
-import vo.PacienteVo;
+//import vo.MedicoVo;
+//import vo.PacienteVo;
 import vo.ReservaVo;
 
 import com.google.gson.Gson;
 
+/**
+ * 
+ * Clase Medico
+ * Es nuestra clase Medico de la capa de negocios.
+ * Contiene todos los atributos de nuestro MedicoVo, 
+ * y añade las funcionalidades de persistencia de la capa ORM.
+ *
+ */
 public class Medico {
+	
+	/**
+	 * Método buscarSuDisponibilidadHora
+	 * Busca las horas médicas disponibles de un médico dado entre un rango de fechas.
+	 * @param idMedico
+	 * @param f1
+	 * @param f2
+	 * @return Lista de horas médicas disponibles del Médico.
+	 */
+	
 	public String buscarSuDisponibilidadHora(int idMedico, Date f1, Date f2) {
 		Gson g = new Gson();
 		List<HoraMedicaVo> lhoras = new ArrayList<HoraMedicaVo>();
@@ -26,6 +44,7 @@ public class Medico {
 			c.reserva.isEmpty();
 			c.medicoId.eq(idMedico);
 
+			@SuppressWarnings("unchecked")
 			List<orm.Hora_medica> horas = c.list();
 			for (int i = 0; i < horas.size(); i++) {
 				HoraMedicaVo hmed = HoraMedicaVo.fromORM(horas.get(i));
@@ -39,6 +58,14 @@ public class Medico {
 		return null;
 	}
 
+	/**
+	 * Método ReservarHoraMedicaControl
+	 * Recibe un arreglo de enteros correspondientes a horas de control
+	 * y el id del paciente para posteriormente reservarlas.
+	 * @param idHoraControl
+	 * @param idPaciente
+	 * @return Lista de horas reservadas.
+	 */
 	public String ReservarHoraMedicaControl(int idHoraControl[], int idPaciente) {
 
 		Gson g = new Gson();

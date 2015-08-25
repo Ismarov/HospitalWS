@@ -16,8 +16,8 @@ package cliente;
 import java.util.LinkedHashMap;
 
 /**
- * This is the Map returned for all objects. The properties are just key/value
- * pairs. If an object has subobjects those are just lists of SimpleObjects
+ * Este es el mapa retornado para todos los objetos, las propiedades son pares clave/valor.
+ * Si un objeto tiene subobjetos, entonces estos son listas de SimpleObjects.
  */
 public class SimpleObject extends LinkedHashMap<String, Object> {
 
@@ -28,8 +28,7 @@ public class SimpleObject extends LinkedHashMap<String, Object> {
 	}
 
 	/**
-	 * Puts a property in this map, and returns the map itself (for chained
-	 * method calls)
+	 * Le da propiedades a este mapa, y retorna el mism mapa (para llamadas anidadas)
 	 * 
 	 * @param key
 	 * @param value

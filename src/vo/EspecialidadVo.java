@@ -1,5 +1,12 @@
 package vo;
 
+/**
+ * 
+ * Clase EspecialidadVo
+ * Genera un VO de Especialidad con los datos de Especialidad, constructor con parámetros, 
+ * getters y método para usar con ORM.
+ *
+ */
 public class EspecialidadVo {
 	private int id;
 	private String nombre;

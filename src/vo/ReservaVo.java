@@ -1,5 +1,12 @@
 package vo;
 
+/**
+ * 
+ * Clase ReservaVo
+ * Genera un VO de Reserva con los datos de Reserva, constructor con parámetros, 
+ * getters y método para usar con ORM.
+ *
+ */
 public class ReservaVo {
 	private int id;
 	private PersonaVo personaVo;

@@ -1,5 +1,12 @@
 package vo;
 
+/**
+ * 
+ * Clase BoxVo
+ * Genera un VO de Box con los datos de Box, constructor con parámetros, 
+ * getters y método para usar con ORM.
+ *
+ */
 public class BoxVo {
 	private int id;
 	private String nombre;

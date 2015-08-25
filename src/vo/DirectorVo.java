@@ -1,5 +1,12 @@
 package vo;
 
+/**
+ * 
+ * Clase DirectorVo
+ * Genera un VO de Director con los datos de Director, constructor con parámetros, 
+ * getters y método para usar con ORM.
+ *
+ */
 public class DirectorVo {
 	private int id;
 	private PersonaVo personavo;

@@ -1,5 +1,12 @@
 package vo;
 
+/**
+ * 
+ * Clase HoraMedicaPacienteVo
+ * Genera un VO de HoraMedicaPaciente con los datos de HoraMedicaPaciente, constructor con parámetros, 
+ * getters y método para usar con ORM.
+ *
+ */
 public class HoraMedicaPacienteVo {
 	private HoraMedicaVo horamedicavo;
 	private ReservaVo reservavo;
