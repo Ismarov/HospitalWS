@@ -28,3 +28,10 @@ local.properties
 # PDT-specific
 .buildpath
 
+./src/orm/*
+./src/ormmappings/*
+./src/ormsamples/*
+
+src/orm/*
+src/ormmappings/*
+src/ormsamples/*
