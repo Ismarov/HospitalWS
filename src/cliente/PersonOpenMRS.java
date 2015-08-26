@@ -18,8 +18,8 @@ import cliente.SimpleObject;
 import bussines.Director;
 
 public class PersonOpenMRS {
-	RestClient rc = new RestClient("admin", "Admin1234",
-			"http://localhost:8080/openmrs1/ws/rest/v1");
+	RestClient rc = new RestClient("admin", "Admin123",
+			"http://localhost:8081/openmrs-standalone/ws/rest/v1");
 
 	Director dir = new Director();
 	PersonaVo p = new PersonaVo();
@@ -108,7 +108,6 @@ public class PersonOpenMRS {
 					.add("retired", false);
 			provider.add("person", pers_uuid).add("identifiers",
 					new SimpleObject[] { identifiers });
-
 			Map<String, Object> result = new HashMap<String, Object>();
 
 			try {
