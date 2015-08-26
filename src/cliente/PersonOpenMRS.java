@@ -38,7 +38,8 @@ public class PersonOpenMRS {
 	 * 
 	 */
 	private String ingresarPersonaORMS(PersonaVo p) {
-		// Genera dos SimpleObject, que servirán de lista más adelante para el JSON de la
+		// Genera dos SimpleObject, que servirán de lista más adelante para el
+		// JSON de la
 		// Api REST
 		SimpleObject names = new SimpleObject();
 		SimpleObject person = new SimpleObject();
@@ -46,7 +47,7 @@ public class PersonOpenMRS {
 		names.add("givenName", p.getNombres()).add("familyName",
 				p.getApellidos());
 		person.add("gender", "M").add("names", new SimpleObject[] { names });
-	
+
 		try {
 			// Generamos este Array de String, Object (JSON Anidado)
 			Map<String, Object> mapa = new HashMap<String, Object>();
@@ -55,7 +56,7 @@ public class PersonOpenMRS {
 			String uuid = mapa.get("uuid").toString();
 			// Retornamos el UUID
 			return uuid;
-	
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -74,13 +75,14 @@ public class PersonOpenMRS {
 	 */
 	public boolean ingresarPacienteORMS(PacienteVo p)
 			throws PersistentException {
-		// Genera dos SimpleObject, que servirán de lista más adelante para el JSON de la
+		// Genera dos SimpleObject, que servirán de lista más adelante para el
+		// JSON de la
 		// Api REST
 		SimpleObject patient = new SimpleObject();
 		SimpleObject identifiers = new SimpleObject();
 		// Extraemos las Id del paciente y la persona correspondiente
-		//int pers_id = p.getPersonavo().getId();
-		//int pac_id = p.getId();
+		// int pers_id = p.getPersonavo().getId();
+		// int pac_id = p.getId();
 		// Para setear la Id de la persona al UUID correspondiente a OpenMRS
 		String pers_uuid = this.ingresarPersonaORMS(p.getPersonavo());
 		String pat_uuid = null;
@@ -145,13 +147,14 @@ public class PersonOpenMRS {
 	 * 
 	 */
 	public boolean ingresarMedicoORMS(MedicoVo m) throws PersistentException {
-		// Genera dos SimpleObject, que servirán de lista más adelante para el JSON de la
+		// Genera dos SimpleObject, que servirán de lista más adelante para el
+		// JSON de la
 		// Api REST
 		SimpleObject provider = new SimpleObject();
 		SimpleObject identifiers = new SimpleObject();
 		// Extraemos las Id del Médico y la persona correspondiente
-		//int pers_id = m.getPersona().getId();
-		//int med_id = m.getId();
+		// int pers_id = m.getPersona().getId();
+		// int med_id = m.getId();
 		// Para setear la Id de la persona al UUID correspondiente a OpenMRS
 
 		String pers_uuid = this.ingresarPersonaORMS(m.getPersona());

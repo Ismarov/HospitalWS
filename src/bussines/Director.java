@@ -33,10 +33,9 @@ import com.google.gson.Gson;
 
 /**
  * 
- * Clase Director
- * Es nuestra clase Director de la capa de negocios.
- * Contiene todos los atributos de nuestro DirectorVo, 
- * y añade las funcionalidades de persistencia de la capa ORM.
+ * Clase Director Es nuestra clase Director de la capa de negocios. Contiene
+ * todos los atributos de nuestro DirectorVo, y añade las funcionalidades de
+ * persistencia de la capa ORM.
  *
  */
 public class Director {
@@ -45,10 +44,11 @@ public class Director {
 			String rut, Date f_nac, String telefono, String direccion,
 			String ciudad, String email, int activo) {
 
-		//Instancia un nuevo objeto Gson para el parseo Objeto/JSON y JSON/Objeto
+		// Instancia un nuevo objeto Gson para el parseo Objeto/JSON y
+		// JSON/Objeto
 		Gson g = new Gson();
 		try {
-			//Intenta setear todos los atributos heredados del orm Persona
+			// Intenta setear todos los atributos heredados del orm Persona
 			orm.Persona per = new orm.Persona();
 			per.setNombres(nombres);
 			per.setApellidos(apellidos);
@@ -59,7 +59,7 @@ public class Director {
 			per.setCiudad(ciudad);
 			per.setEmail(email);
 			per.setActivo((byte) activo);
-			//Si la persona se logra persistir, se asigna como Director
+			// Si la persona se logra persistir, se asigna como Director
 			if (orm.PersonaDAO.save(per)) {
 				orm.PersonaDAO.refresh(per);
 				orm.Paciente pac = new orm.Paciente();
@@ -79,10 +79,11 @@ public class Director {
 	}
 
 	/**
-	 * Método ingersarMedico:
-	 * Ingresa un nuevo Médico a nuestro sistema utilizando los datos de su persona
-	 * Mas los atributos propios de Médico (idEspecialidad)
-	 * para luego persistirlos en nuestra base de datos local y en OpenMRS.
+	 * Método ingersarMedico: Ingresa un nuevo Médico a nuestro sistema
+	 * utilizando los datos de su persona Mas los atributos propios de Médico
+	 * (idEspecialidad) para luego persistirlos en nuestra base de datos local y
+	 * en OpenMRS.
+	 * 
 	 * @param nombres
 	 * @param apellidos
 	 * @param rut
@@ -98,11 +99,12 @@ public class Director {
 	public String ingresarMedico(String nombres, String apellidos, String rut,
 			Date f_nac, String telefono, String direccion, String ciudad,
 			String email, int activo, int idEspecialidad) {
-		//Instancia un nuevo objeto Gson para el parseo Objeto/JSON y JSON/Objeto
+		// Instancia un nuevo objeto Gson para el parseo Objeto/JSON y
+		// JSON/Objeto
 
 		Gson g = new Gson();
 		try {
-			//Intenta setear todos los atributos heredados del orm Persona
+			// Intenta setear todos los atributos heredados del orm Persona
 
 			orm.Persona per = new orm.Persona();
 			per.setNombres(nombres);
@@ -119,7 +121,7 @@ public class Director {
 					.getEspecialidadByORMID(idEspecialidad);
 
 			if (orm.PersonaDAO.save(per) && esp != null) {
-				//Si la persona se logra persistir, se asigna como Médico
+				// Si la persona se logra persistir, se asigna como Médico
 
 				orm.PersonaDAO.refresh(per);
 				orm.Medico med = new orm.Medico();
@@ -140,6 +142,7 @@ public class Director {
 
 	/**
 	 * obtenerMedico
+	 * 
 	 * @return JSON con lista de Médicos ingresados
 	 */
 	public String obtenerMedico() {
@@ -164,8 +167,11 @@ public class Director {
 
 	/**
 	 * Método obtenerPacientesMasAtendido
-	 * @param f1 fecha 1
-	 * @param f2 fecha 2
+	 * 
+	 * @param f1
+	 *            fecha 1
+	 * @param f2
+	 *            fecha 2
 	 * @return Lista de Pacientes ordenada segun numero de atenciones.
 	 */
 	public String obtenerPacientesMasAtendido(Date f1, Date f2) {
@@ -179,8 +185,11 @@ public class Director {
 
 	/**
 	 * Método obtenerMedicoMasSolicitado
-	 * @param f1 fecha 1
-	 * @param f2 fecha 2
+	 * 
+	 * @param f1
+	 *            fecha 1
+	 * @param f2
+	 *            fecha 2
 	 * @return Lista de Médicos segun su numero de horas reservadas.
 	 */
 	public String obtenerMedicoMasSolicitado(Date f1, Date f2) {
@@ -191,20 +200,22 @@ public class Director {
 				.getReporte(REPORTE_TIPO.MED_MAS_SOL);
 		return rm.getReport(f1, f2);
 	}
-	
+
 	/**
-	 * Método obtenerPorcentajeOcupacionMedico
-	 * Recibe el Id del medico a solicitar y el rango de fechas a consultar.
+	 * Método obtenerPorcentajeOcupacionMedico Recibe el Id del medico a
+	 * solicitar y el rango de fechas a consultar.
+	 * 
 	 * @param medicoId
 	 * @param f1
 	 * @param f2
 	 * @return Retorna un entero en % de el numero de ocupacion del medico,
-	 * entre sus horas ingresadas y sus horas reservadas.
+	 *         entre sus horas ingresadas y sus horas reservadas.
 	 */
 	public int obtenerPorcentajeOcupacionMedico(int medicoId, Date f1, Date f2) {
 		//
 		try {
-			//Genera los criterios Hibernate para consultar las reservas y las fechas segun las horas
+			// Genera los criterios Hibernate para consultar las reservas y las
+			// fechas segun las horas
 			ReservaCriteria c = new ReservaCriteria();
 			Hora_medicaCriteria hm = c.createHora_medicaCriteria();
 			hm.f_inicio.between(new Timestamp(f1.getTime()),
@@ -238,6 +249,7 @@ public class Director {
 
 	/**
 	 * Método obtenerBox
+	 * 
 	 * @return Retorna lista de boxes y sus nombres.
 	 */
 	public String obtenerBox() {
@@ -258,9 +270,10 @@ public class Director {
 	}
 
 	/**
-	 * Método obtenerPorcentajeOcupacionBox
-	 * Obtiene el porcentaje de ocupacion de un box, 
-	 * respecto de sus horas médicas, sus reservas y el rango de fechas.
+	 * Método obtenerPorcentajeOcupacionBox Obtiene el porcentaje de ocupacion
+	 * de un box, respecto de sus horas médicas, sus reservas y el rango de
+	 * fechas.
+	 * 
 	 * @param boxId
 	 * @param f1
 	 * @param f2
@@ -298,15 +311,16 @@ public class Director {
 
 		return -1;
 	}
-	
-/**}
- * Método crearHoraMedica
- * Crea una hora médica utilizando los parámetros necesarios para ello.
- * @param idMedico
- * @param idBox
- * @param fecha
- * @return Retorna los datos de la hora médica creada.
- */
+
+	/**
+	 * } Método crearHoraMedica Crea una hora médica utilizando los parámetros
+	 * necesarios para ello.
+	 * 
+	 * @param idMedico
+	 * @param idBox
+	 * @param fecha
+	 * @return Retorna los datos de la hora médica creada.
+	 */
 	public String crearHoraMedica(int idMedico, int idBox, Date fecha) {
 
 		Gson g = new Gson();
