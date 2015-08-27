@@ -35,3 +35,6 @@ local.properties
 src/orm/*
 src/ormmappings/*
 src/ormsamples/*
+WebContent/WEB-INF/services/*
+WebContent/WEB-INF/lib/*
+
