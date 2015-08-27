@@ -211,4 +211,23 @@ public class Rce {
 			return null;
 		}
 	}
+	
+	public String ObtenerRceDeUnPaciente(int IdPaciente) {
+		Gson g = new Gson();
+		List<RceVo> rcevos = new ArrayList<RceVo>();
+		try {
+			orm.Rce[] ormRce = orm.RceDAO.listRceByQuery(
+					"pacienteid='" + String.valueOf(IdPaciente) + "'",
+					null);
+
+			for (int i = 0; i < ormRce.length; i++) {
+				rcevos.add(RceVo.fromORM(ormRce[i]));
+			}
+			String salida = g.toJson(rcevos);
+			return salida;
+		} catch (PersistentException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }
