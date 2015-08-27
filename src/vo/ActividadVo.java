@@ -3,13 +3,11 @@ package vo;
 public class ActividadVo {
 	private int id;
 	private String desc;
-	DiagnosticoVo diagnostico;
 	
-	public ActividadVo(int id, String desc, DiagnosticoVo diagnostico) {
+	public ActividadVo(int id, String desc) {
 		super();
 		this.id = id;
 		this.desc = desc;
-		this.diagnostico = diagnostico;
 	}
 
 	public int getId() {
@@ -19,12 +17,9 @@ public class ActividadVo {
 		return desc;
 	}
 	
-	public DiagnosticoVo getDiagnostico() {
-		return diagnostico;
-	}
 
 	public static ActividadVo fromORM(orm.Actividad a) {
-		ActividadVo ac = new ActividadVo(a.getId(), a.getDesc(), DiagnosticoVo.fromORM(a.getDiagnostico()));
+		ActividadVo ac = new ActividadVo(a.getId(), a.getDesc());
 		return ac;
 	}
 	
