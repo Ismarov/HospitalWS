@@ -1,6 +1,8 @@
 package bussines;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.orm.PersistentException;
@@ -212,7 +214,41 @@ public class Rce {
 		}
 	}
 	
-	public String ObtenerRceDeUnPaciente(int IdPaciente) {
+	public String ingresarRce(int id, int encounter_uuid, String alergias, String anamnesis,
+			String motivo, String examen_fisico, String indicador_medico,
+			String indicador_cierre, String hipotesis, String detalle_ges,
+			HoraMedicaVo horamedica, RecetaVo receta,
+			DiagnosticoVo diagnostico, ProcedimientoVo procedimiento,
+			ActividadVo actividad, PacienteVo paciente) {
+
+			Gson g = new Gson();
+			List<CertificadoVo> certificados = new ArrayList<CertificadoVo>();
+			try {
+				orm.Rce rce = new orm.Rce();
+				if (orm.RceDAO.save(rce)) {
+					orm.RceDAO.refresh(rce);
+					RceVo rvo = RceVo.fromORM(rce);
+					String salida = g.toJson(rvo);
+					
+					orm.Certificado[] ormCertificados = orm.CertificadoDAO.listCertificadoByQuery(
+							"rceid='" + String.valueOf(id) + "'",
+							null);
+				
+					for (int i = 0; i < ormCertificados.length; i++) {
+					certificados.add(CertificadoVo.fromORM(ormCertificados[i]));
+					}
+					salida += g.toJson(certificados);
+					return salida;
+				}
+			}
+		 catch (PersistentException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public String obtenerRceDeUnPaciente(int IdPaciente) {
 		Gson g = new Gson();
 		List<RceVo> rcevos = new ArrayList<RceVo>();
 		try {
@@ -230,4 +266,6 @@ public class Rce {
 			return null;
 		}
 	}
+	
+	
 }
