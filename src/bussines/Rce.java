@@ -3,6 +3,7 @@ package bussines;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.orm.PersistentException;
@@ -217,29 +218,55 @@ public class Rce {
 	public String ingresarRce(int id, int encounter_uuid, String alergias, String anamnesis,
 			String motivo, String examen_fisico, String indicador_medico,
 			String indicador_cierre, String hipotesis, String detalle_ges,
-			HoraMedicaVo horamedica, RecetaVo receta,
-			DiagnosticoVo diagnostico, ProcedimientoVo procedimiento,
-			ActividadVo actividad, PacienteVo paciente) {
+			int horamedica_id, int receta_id,
+			int diagnostico_id, int procedimiento_id,
+			int actividad_id, int paciente_id, int[] lCertificados) {
 
 			Gson g = new Gson();
-			List<CertificadoVo> certificados = new ArrayList<CertificadoVo>();
 			try {
 				orm.Rce rce = new orm.Rce();
+				orm.Receta receta = orm.RecetaDAO.getRecetaByORMID(receta_id);
+				orm.Hora_medica hora = orm.Hora_medicaDAO.getHora_medicaByORMID(horamedica_id);
+				orm.Diagnostico diag = orm.DiagnosticoDAO.getDiagnosticoByORMID(receta_id);
+				orm.Procedimiento proce = orm.ProcedimientoDAO.getProcedimientoByORMID(procedimiento_id);
+				orm.Actividad activ = orm.ActividadDAO.getActividadByORMID(actividad_id);
+				orm.Paciente paci = orm.PacienteDAO.getPacienteByORMID(paciente_id);
+				rce.setEncounter_uuid(encounter_uuid);
+				rce.setAlergias(alergias);
+				rce.setAnamnesis(anamnesis);
+				rce.setMotivo(motivo);
+				rce.setExamen_fisico(examen_fisico);
+				rce.setIndicador_medico(indicador_medico);
+				rce.setIndicador_cierre(indicador_cierre);
+				rce.setHipotesis(hipotesis);
+				rce.setDetalle_ges(detalle_ges);
+				
+				rce.setReceta(receta);
+				rce.setDiagnostico(diag);
+				rce.setProcedimiento(proce);
+				rce.setActividad(activ);
+				rce.setPaciente(paci);
+				rce.setHora_medica(hora);
+				
+				
 				if (orm.RceDAO.save(rce)) {
+					
 					orm.RceDAO.refresh(rce);
+					ArrayList<orm.Certificado> c = new ArrayList<>();
+					for (int i = 0; i < lCertificados.length; i++) {
+						c.add(orm.CertificadoDAO.getCertificadoByORMID(lCertificados[i]));
+					}
+					
+					for (int i = 0; i < c.size(); i++) {
+						rce.certificado.add(c.get(i));
+					}
+					
+					orm.RceDAO.save(rce);
 					RceVo rvo = RceVo.fromORM(rce);
 					String salida = g.toJson(rvo);
-					
-					orm.Certificado[] ormCertificados = orm.CertificadoDAO.listCertificadoByQuery(
-							"rceid='" + String.valueOf(id) + "'",
-							null);
-				
-					for (int i = 0; i < ormCertificados.length; i++) {
-					certificados.add(CertificadoVo.fromORM(ormCertificados[i]));
-					}
-					salida += g.toJson(certificados);
 					return salida;
 				}
+				
 			}
 		 catch (PersistentException e) {
 			// TODO: handle exception
@@ -265,7 +292,5 @@ public class Rce {
 			e.printStackTrace();
 			return null;
 		}
-	}
-	
-	
+	}	
 }
