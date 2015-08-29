@@ -3,7 +3,7 @@ package vo;
 public class RceVo {
 	
 	private int id;
-	private int encounter_uuid;
+	private String encounter_uuid;
 	private String alergias;
 	private String anamnesis;
 	private String motivo;
@@ -19,7 +19,7 @@ public class RceVo {
 	ActividadVo actividad;
 	PacienteVo paciente;
 	
-	public RceVo(int id, int encounter_uuid, String alergias, String anamnesis,
+	public RceVo(int id, String encounter_uuid, String alergias, String anamnesis,
 			String motivo, String examen_fisico, String indicador_medico,
 			String indicador_cierre, String hipotesis, String detalle_ges,
 			HoraMedicaVo horamedica, RecetaVo receta,
@@ -48,7 +48,7 @@ public class RceVo {
 		return id;
 	}
 
-	public int getEncounter_uuid() {
+	public String getEncounter_uuid() {
 		return encounter_uuid;
 	}
 

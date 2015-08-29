@@ -215,7 +215,7 @@ public class Rce {
 		}
 	}
 	
-	public String ingresarRce(int id, int encounter_uuid, String alergias, String anamnesis,
+	public String ingresarRce(int id, String encounter_uuid, String alergias, String anamnesis,
 			String motivo, String examen_fisico, String indicador_medico,
 			String indicador_cierre, String hipotesis, String detalle_ges,
 			int horamedica_id, int receta_id,
