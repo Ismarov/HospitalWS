@@ -7,8 +7,11 @@ import java.util.List;
 
 import org.orm.PersistentException;
 
+
+
 //import orm.Hora_medica;
 import orm.Hora_medicaCriteria;
+import orm.ReservaCriteria;
 //import orm.Reserva;
 //import orm.ReservaCriteria;
 import vo.EspecialidadVo;
@@ -152,6 +155,36 @@ public class Paciente {
 			e.printStackTrace();
 		}
 
+		return null;
+	}
+	
+	public String obtenerHorasPaciente(int idPaciente) {
+		Gson g = new Gson();
+		Date f1 = new Date();
+		f1.setHours(f1.getHours()-1);
+		List<HoraMedicaVo> lhoras = new ArrayList<HoraMedicaVo>();
+		try {
+			/*ReservaCriteria rc = new ReservaCriteria();
+			rc.pacienteId.eq(idPaciente);
+			Hora_medicaCriteria hc = rc.createHora_medicaCriteria();
+			hc.f_inicio.gt(new Timestamp(f1.getTime()));
+			*/
+			Hora_medicaCriteria hc = new Hora_medicaCriteria();
+			hc.f_inicio.gt(new Timestamp(f1.getTime()));
+			ReservaCriteria rc = new ReservaCriteria();
+			rc.pacienteId.eq(idPaciente);
+			
+			@SuppressWarnings("unchecked")
+			List<orm.Hora_medica> horas = hc.list();
+			for (int i = 0; i < horas.size(); i++) {
+				HoraMedicaVo hmed = HoraMedicaVo.fromORM(horas.get(i));
+				lhoras.add(hmed);
+			}// end for
+			return g.toJson(lhoras);
+		} catch (PersistentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 

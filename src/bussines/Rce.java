@@ -8,6 +8,9 @@ import java.util.List;
 
 import org.orm.PersistentException;
 
+import orm.MedicoDAO;
+import orm.PacienteDAO;
+import orm.Persona;
 import vo.*;
 
 import com.google.gson.Gson;
@@ -292,5 +295,43 @@ public class Rce {
 			e.printStackTrace();
 			return null;
 		}
-	}	
+	}
+	
+	public String obtenerPacientePorRut(String rutIngresado) {
+		Gson g = new Gson();
+		try {
+			orm.PersonaCriteria pc = new orm.PersonaCriteria();
+			pc.rut.eq(rutIngresado);
+			orm.Persona personaResult = (orm.Persona) pc.uniqueResult();
+			if (personaResult != null) {
+				List lres = PacienteDAO.queryPaciente("persona_id="+personaResult.getId(), null);
+				orm.Paciente pac = lres.isEmpty() ? null : (orm.Paciente)lres.get(0);
+				if (pac != null) {
+					return g.toJson(PacienteVo.fromORM(pac));
+				}
+			}
+		} catch (PersistentException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public String obtenerMedicoPorRut(String rutIngresado) {
+		Gson g = new Gson();
+		try {
+			orm.PersonaCriteria pc = new orm.PersonaCriteria();
+			pc.rut.eq(rutIngresado);
+			orm.Persona personaResult = (orm.Persona) pc.uniqueResult();
+			if (personaResult != null) {
+				List lres = MedicoDAO.queryMedico("persona_id="+personaResult.getId(), null);
+				orm.Medico pac = lres.isEmpty() ? null : (orm.Medico)lres.get(0);
+				if (pac != null) {
+					return g.toJson(MedicoVo.fromORM(pac));
+				}
+			}
+		} catch (PersistentException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
