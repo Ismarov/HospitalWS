@@ -334,4 +334,26 @@ public class Rce {
 		}
 		return null;
 	}
+	
+	public String ingresarReceta(int id, byte paciente_ges, byte paciente_cronico, byte patologia_ges,
+			String desc) {
+
+			Gson g = new Gson();
+			try {
+				orm.Receta rec = new orm.Receta();
+				rec.setPaciente_ges(paciente_ges);
+				rec.setPaciente_cronico(paciente_cronico);
+				rec.setPatologia_ges(patologia_ges);
+				rec.setDesc(desc);
+				orm.RecetaDAO.save(rec);
+				orm.RecetaDAO.refresh(rec);
+				
+				return g.toJson(RecetaVo.fromORM(rec));
+			}
+		 catch (PersistentException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
