@@ -230,7 +230,7 @@ public class Rce {
 				orm.Rce rce = new orm.Rce();
 				orm.Receta receta = orm.RecetaDAO.getRecetaByORMID(receta_id);
 				orm.Hora_medica hora = orm.Hora_medicaDAO.getHora_medicaByORMID(horamedica_id);
-				orm.Diagnostico diag = orm.DiagnosticoDAO.getDiagnosticoByORMID(receta_id);
+				orm.Diagnostico diag = orm.DiagnosticoDAO.getDiagnosticoByORMID(diagnostico_id);
 				orm.Procedimiento proce = orm.ProcedimientoDAO.getProcedimientoByORMID(procedimiento_id);
 				orm.Actividad activ = orm.ActividadDAO.getActividadByORMID(actividad_id);
 				orm.Paciente paci = orm.PacienteDAO.getPacienteByORMID(paciente_id);
