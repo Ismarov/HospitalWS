@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+
 //import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 //import org.hibernate.criterion.Projection;
@@ -23,7 +24,7 @@ import com.google.gson.GsonBuilder;
 
 /**
  * 
- * Clase RepMedMasSol Reporte del Médico mas solicitado con su lista de horas.
+ * Clase RepMedMasSol Reporte del Mï¿½dico mas solicitado con su lista de horas.
  * Extiende de Reporte.
  * 
  *
@@ -57,11 +58,10 @@ public class RepMedMasSol extends Reporte {
 
 	/* +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ */
 
-	@Override
 	/**
 	 * getReport Obtiene un reporte de reservas entre dos fechas dadas.
 	 * @param Dafe t1 y Date t2
-	 * @return String lista de reservas y sus Médicos ordenadas de mayor a menor.
+	 * @return String lista de reservas y sus Mï¿½dicos ordenadas de mayor a menor.
 	 */
 	public String getReport(Date t1, Date t2) {
 		// Gson g = new Gson();
@@ -91,7 +91,7 @@ public class RepMedMasSol extends Reporte {
 			int count = 0;
 			int current_id = 0;
 
-			if (medicos.size() > 0) { // Si existen Médicos con Reservas.
+			if (medicos.size() > 0) { // Si existen Mï¿½dicos con Reservas.
 
 				current_id = medicos.get(0).getId(); // El id actual es el del
 														// primer medico;
@@ -101,8 +101,8 @@ public class RepMedMasSol extends Reporte {
 							|| i == medicos.size() - 1) { // Sigo contando a
 															// menos que el id
 															// cambie.
-						if (i == medicos.size() - 1) { // Si agregamos el último
-														// Médico debemos
+						if (i == medicos.size() - 1) { // Si agregamos el ï¿½ltimo
+														// Mï¿½dico debemos
 														// incrementar
 							count++; // en 1+ la cuenta.
 						}

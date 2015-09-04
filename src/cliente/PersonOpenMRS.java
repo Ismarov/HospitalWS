@@ -7,16 +7,17 @@ import java.util.Map;
 
 import org.orm.PersistentException;
 
+
 //import orm.Paciente;
 import vo.MedicoVo;
 import vo.PacienteVo;
 import vo.PersonaVo;
 import cliente.RestClient;
 import cliente.SimpleObject;
-import bussines.Director;
+import business.Director;
 
 /**
- * Constructor para el cliente Rest PersonOpenMRS Usará las credenciales de
+ * Constructor para el cliente Rest PersonOpenMRS Usarï¿½ las credenciales de
  * nuestra Api REST OpenMRS Posteriormente, hacemos un objeto Director y un
  * objeto PersonaVo.
  **/
@@ -29,21 +30,21 @@ public class PersonOpenMRS {
 	PersonaVo p = new PersonaVo();
 
 	/**
-	 * Método ingresarPersonaORMS, ingresa una Persona a OpenMRS
+	 * Mï¿½todo ingresarPersonaORMS, ingresa una Persona a OpenMRS
 	 * 
 	 * @param p
-	 *            La Persona que recibiremos e ingresamos a través de la Api
+	 *            La Persona que recibiremos e ingresamos a travï¿½s de la Api
 	 *            REST
 	 * @return String uuid generado por OpenMRS al ingresar a la Persona
 	 * 
 	 */
 	private String ingresarPersonaORMS(PersonaVo p) {
-		// Genera dos SimpleObject, que servirán de lista más adelante para el
+		// Genera dos SimpleObject, que servirï¿½n de lista mï¿½s adelante para el
 		// JSON de la
 		// Api REST
 		SimpleObject names = new SimpleObject();
 		SimpleObject person = new SimpleObject();
-		// Extrae los nombres, apellidos, sexo y los añade al SimpleObject
+		// Extrae los nombres, apellidos, sexo y los aï¿½ade al SimpleObject
 		names.add("givenName", p.getNombres()).add("familyName",
 				p.getApellidos());
 		person.add("gender", "M").add("names", new SimpleObject[] { names });
@@ -65,17 +66,17 @@ public class PersonOpenMRS {
 	}
 
 	/**
-	 * Método ingresarPacienteORMS, ingresa un Paciente a OpenMRS
+	 * Mï¿½todo ingresarPacienteORMS, ingresa un Paciente a OpenMRS
 	 * 
 	 * @param p
-	 *            El Paciente que recibiremos e ingresamos a través de la Api
+	 *            El Paciente que recibiremos e ingresamos a travï¿½s de la Api
 	 *            REST, verificando su UUID de Persona
 	 * @return boolean True en caso de ingreso exitoso, de lo contrario, false.
 	 * 
 	 */
 	public boolean ingresarPacienteORMS(PacienteVo p)
 			throws PersistentException {
-		// Genera dos SimpleObject, que servirán de lista más adelante para el
+		// Genera dos SimpleObject, que servirï¿½n de lista mï¿½s adelante para el
 		// JSON de la
 		// Api REST
 		SimpleObject patient = new SimpleObject();
@@ -86,10 +87,10 @@ public class PersonOpenMRS {
 		// Para setear la Id de la persona al UUID correspondiente a OpenMRS
 		String pers_uuid = this.ingresarPersonaORMS(p.getPersonavo());
 		String pat_uuid = null;
-		// Si la UUID no es nula (no falló la extracción de Id):
+		// Si la UUID no es nula (no fallï¿½ la extracciï¿½n de Id):
 		if (pers_uuid != null) {
 			// Generamos el JSON para el ingreso del paciente, seteando su Id,
-			// Identificador de tipo Paciente, Localización por defecto, y
+			// Identificador de tipo Paciente, Localizaciï¿½n por defecto, y
 			// preferencia
 			identifiers
 					.add("identifier", String.valueOf(p.getId()))
@@ -139,30 +140,30 @@ public class PersonOpenMRS {
 	}
 
 	/**
-	 * Método ingresarMedicoORMS, ingresa un Médico a OpenMRS
+	 * Mï¿½todo ingresarMedicoORMS, ingresa un Mï¿½dico a OpenMRS
 	 * 
 	 * @param p
-	 *            El médico que recibiremos e ingresamos a través de la Api REST
+	 *            El mï¿½dico que recibiremos e ingresamos a travï¿½s de la Api REST
 	 * @return boolean True en caso de ingreso exitoso, de lo contrario, false.
 	 * 
 	 */
 	public boolean ingresarMedicoORMS(MedicoVo m) throws PersistentException {
-		// Genera dos SimpleObject, que servirán de lista más adelante para el
+		// Genera dos SimpleObject, que servirï¿½n de lista mï¿½s adelante para el
 		// JSON de la
 		// Api REST
 		SimpleObject provider = new SimpleObject();
 		SimpleObject identifiers = new SimpleObject();
-		// Extraemos las Id del Médico y la persona correspondiente
+		// Extraemos las Id del Mï¿½dico y la persona correspondiente
 		// int pers_id = m.getPersona().getId();
 		// int med_id = m.getId();
 		// Para setear la Id de la persona al UUID correspondiente a OpenMRS
 
 		String pers_uuid = this.ingresarPersonaORMS(m.getPersona());
 		String med_uuid = null;
-		// Si la UUID no es nula (no falló la extracción de Id):
+		// Si la UUID no es nula (no fallï¿½ la extracciï¿½n de Id):
 
 		if (pers_uuid != null) {
-			// Generamos el JSON para el ingreso del Médico, seteando su Id,
+			// Generamos el JSON para el ingreso del Mï¿½dico, seteando su Id,
 			// e Identificadores
 			identifiers
 					.add("identifier", String.valueOf(m.getId()))
@@ -186,16 +187,16 @@ public class PersonOpenMRS {
 				e.printStackTrace();
 			}
 		}
-		// Si ahora existe la UUID de Persona y Médico:
+		// Si ahora existe la UUID de Persona y Mï¿½dico:
 
 		if (pers_uuid != null && med_uuid != null) {
 			orm.Proveedor_openmrs medOrms = new orm.Proveedor_openmrs();
 			orm.MedicoCriteria mc = new orm.MedicoCriteria();
 
-			// Buscar el Médico con id p.getId()
+			// Buscar el Mï¿½dico con id p.getId()
 			mc.personaId.eq(p.getId());
 
-			// Busca un solo registro de Médico concordante con el criterio
+			// Busca un solo registro de Mï¿½dico concordante con el criterio
 
 			Object medicoResult = mc.uniqueResult();
 			// Si el resultado es distinto de null:
@@ -203,7 +204,7 @@ public class PersonOpenMRS {
 				orm.Medico medico = (orm.Medico) medicoResult;
 				medOrms.setUuid(med_uuid);
 
-				// Persistimos este Médico, ya que ya ha sido ingresado en
+				// Persistimos este Mï¿½dico, ya que ya ha sido ingresado en
 				// OpenMRS
 				medOrms.setMedico(medico);
 			}

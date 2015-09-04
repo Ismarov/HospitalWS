@@ -1,4 +1,4 @@
-package bussines;
+package business;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -7,37 +7,32 @@ import java.util.List;
 
 import org.orm.PersistentException;
 
-
-
-//import orm.Hora_medica;
 import orm.Hora_medicaCriteria;
 import orm.ReservaCriteria;
-//import orm.Reserva;
-//import orm.ReservaCriteria;
 import vo.EspecialidadVo;
 import vo.HoraMedicaVo;
 import vo.MedicoVo;
 import vo.ReservaVo;
 
-import com.google.gson.Gson;
+
 
 /**
  * 
  * Clase Paciente Es nuestra clase Paciente de la capa de negocios. Contiene
- * todos los atributos de nuestro PacienteVo, y añade las funcionalidades de
+ * todos los atributos de nuestro PacienteVo, y aï¿½ade las funcionalidades de
  * persistencia de la capa ORM.
  *
  */
 public class Paciente {
 
 	/**
-	 * Método obtenerEspecialidad
+	 * Mï¿½todo obtenerEspecialidad
 	 * 
 	 * @return Retorna la lista de especialidades disponibles.
 	 */
-	public String obtenerEspecialidad() {
-		Gson g = new Gson();
-		List<EspecialidadVo> lEspecialidad = new ArrayList<EspecialidadVo>();
+	public ArrayList<EspecialidadVo> obtenerEspecialidades() {
+
+		ArrayList<EspecialidadVo> lEspecialidad = new ArrayList<EspecialidadVo>();
 
 		try {
 			orm.Especialidad[] especialidades = orm.EspecialidadDAO
@@ -46,9 +41,7 @@ public class Paciente {
 			for (int i = 0; i < especialidades.length; i++) {
 				lEspecialidad.add(EspecialidadVo.fromORM(especialidades[i]));
 			}
-			String salida = g.toJson(lEspecialidad);
-
-			return salida;
+			return lEspecialidad;
 
 		} catch (PersistentException e) {
 			// TODO: handle exception
@@ -58,14 +51,14 @@ public class Paciente {
 	}
 
 	/**
-	 * Método ObtenerMedicosDeUnaEspecialidad
+	 * Mï¿½todo ObtenerMedicosDeUnaEspecialidad
 	 * 
 	 * @param IdEspecialidad
 	 * @return Retorna la lista de medicos de un IdEspecialidad dado.
 	 */
-	public String ObtenerMedicosDeUnaEspecialidad(int IdEspecialidad) {
-		Gson g = new Gson();
-		List<MedicoVo> medicovos = new ArrayList<MedicoVo>();
+	public ArrayList<MedicoVo> ObtenerMedicosDeUnaEspecialidad(int IdEspecialidad) {
+
+		ArrayList<MedicoVo> medicovos = new ArrayList<MedicoVo>();
 		try {
 			orm.Medico[] ormMedicos = orm.MedicoDAO.listMedicoByQuery(
 					"especialidad_id='" + String.valueOf(IdEspecialidad) + "'",
@@ -74,8 +67,7 @@ public class Paciente {
 			for (int i = 0; i < ormMedicos.length; i++) {
 				medicovos.add(MedicoVo.fromORM(ormMedicos[i]));
 			}
-			String salida = g.toJson(medicovos);
-			return salida;
+			return medicovos;
 		} catch (PersistentException e) {
 			e.printStackTrace();
 			return null;
@@ -83,17 +75,17 @@ public class Paciente {
 	}
 
 	/**
-	 * Método buscarHoraAps Busca las horas APS de un idMedico dado entre un
+	 * Mï¿½todo buscarHoraAps Busca las horas APS de un idMedico dado entre un
 	 * rango de fechas f1 y f2.
 	 * 
 	 * @param idMedico
 	 * @param f1
 	 * @param f2
-	 * @return Lista con las horas APS del Médico en el rango de fechas dado.
+	 * @return Lista con las horas APS del Mï¿½dico en el rango de fechas dado.
 	 */
-	public String buscarHoraAps(int idMedico, Date f1, Date f2) {
-		Gson g = new Gson();
-		List<HoraMedicaVo> lHoras = new ArrayList<HoraMedicaVo>();
+	public ArrayList<HoraMedicaVo> buscarHoraAps(int idMedico, Date f1, Date f2) {
+
+		ArrayList<HoraMedicaVo> lHoras = new ArrayList<HoraMedicaVo>();
 		try {
 			Hora_medicaCriteria c = new Hora_medicaCriteria();
 			c.f_inicio.between(new Timestamp(f1.getTime()),
@@ -108,7 +100,7 @@ public class Paciente {
 				HoraMedicaVo h = HoraMedicaVo.fromORM(horas.get(i));
 				lHoras.add(h);
 			}
-			return g.toJson(lHoras);
+			return lHoras;
 
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
@@ -118,18 +110,16 @@ public class Paciente {
 	}
 
 	/**
-	 * Método ReservarHoraAps Reserva una hora APS dando el idHoraMedicaAps
+	 * Mï¿½todo reservarHoraAps Reserva una hora APS dando el idHoraMedicaAps
 	 * correspondiente y el idPaciente al cual se la asignaremos.
 	 * 
 	 * @param idHoraMedicaAps
 	 * @param idPaciente
-	 * @return Retorna lista de reservas con horas médicas APS.
+	 * @return Retorna un ValueObject de la reserva asiciada a las horas medicas o null en caso de error.
 	 */
-	public String ReservarHoraAps(int idHoraMedicaAps, int idPaciente) {
+	public ReservaVo reservarHoraAps(int idHoraMedicaAps, int idPaciente) {
 
-		Gson g = new Gson();
 		try {
-
 			orm.Hora_medica hm = orm.Hora_medicaDAO
 					.getHora_medicaByORMID(idHoraMedicaAps);
 			orm.Paciente pa = orm.PacienteDAO.getPacienteByORMID(idPaciente);
@@ -146,7 +136,7 @@ public class Paciente {
 					orm.ReservaDAO.refresh(re);
 
 					reVo = ReservaVo.fromORM(re);
-					return g.toJson(reVo);
+					return reVo;
 				}
 			}
 
@@ -158,11 +148,18 @@ public class Paciente {
 		return null;
 	}
 	
-	public String obtenerHorasPaciente(int idPaciente) {
-		Gson g = new Gson();
+	
+	/**
+	 * obtenerHorasPaciente Obtiene las horas reservadas del paciente 
+	 * @param idPaciente
+	 * @return Lista con las horas reservadas para el paciente desde la fecha actual hacia el fururo
+	 */
+	@SuppressWarnings("deprecation")
+	public ArrayList<HoraMedicaVo> obtenerHorasPaciente(int idPaciente) {
+
 		Date f1 = new Date();
 		f1.setHours(f1.getHours()-1);
-		List<HoraMedicaVo> lhoras = new ArrayList<HoraMedicaVo>();
+		ArrayList<HoraMedicaVo> lhoras = new ArrayList<HoraMedicaVo>();
 		try {
 			/*ReservaCriteria rc = new ReservaCriteria();
 			rc.pacienteId.eq(idPaciente);
@@ -180,7 +177,7 @@ public class Paciente {
 				HoraMedicaVo hmed = HoraMedicaVo.fromORM(horas.get(i));
 				lhoras.add(hmed);
 			}// end for
-			return g.toJson(lhoras);
+			return lhoras;
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -13,18 +13,18 @@ public class RceVo {
 	private String hipotesis;
 	private String detalle_ges;
 	HoraMedicaVo horamedica;
-	RecetaVo receta;
+	RecetaVo[] receta;
 	DiagnosticoVo diagnostico;
-	ProcedimientoVo procedimiento;
-	ActividadVo actividad;
+	ProcedimientoVo[] procedimiento;
+	ActividadVo[] actividad;
 	PacienteVo paciente;
 	
 	public RceVo(int id, String encounter_uuid, String alergias, String anamnesis,
 			String motivo, String examen_fisico, String indicador_medico,
 			String indicador_cierre, String hipotesis, String detalle_ges,
-			HoraMedicaVo horamedica, RecetaVo receta,
-			DiagnosticoVo diagnostico, ProcedimientoVo procedimiento,
-			ActividadVo actividad, PacienteVo paciente) {
+			HoraMedicaVo horamedica, RecetaVo[] receta,
+			DiagnosticoVo diagnostico, ProcedimientoVo[] procedimiento,
+			ActividadVo[] actividad, PacienteVo paciente) {
 		super();
 		this.id = id;
 		this.encounter_uuid = encounter_uuid;
@@ -88,19 +88,19 @@ public class RceVo {
 		return horamedica;
 	}
 
-	public RecetaVo getReceta() {
+	public RecetaVo[] getRecetas() {
 		return receta;
 	}
 
-	public DiagnosticoVo getDiagnostico() {
+	public DiagnosticoVo getDiagnosticos() {
 		return diagnostico;
 	}
 
-	public ProcedimientoVo getProcedimiento() {
+	public ProcedimientoVo[] getProcedimientos() {
 		return procedimiento;
 	}
 
-	public ActividadVo getActividad() {
+	public ActividadVo[] getActividades() {
 		return actividad;
 	}
 
@@ -109,11 +109,32 @@ public class RceVo {
 	}
 	
 	public static RceVo fromORM(orm.Rce r) {
+		//Actividades
+		ActividadVo[] actividades = new ActividadVo[ r.actividad.size()];
+		orm.Actividad[] act_orm = (orm.Actividad[])(r.actividad.toArray());
+		for(int i=0; i< r.actividad.size(); i++){
+			actividades[i] = ActividadVo.fromORM(act_orm[i]);
+		}
+		//Procedimientos
+		ProcedimientoVo[] procedimientos = new ProcedimientoVo[ r.procedimiento.size()];
+		orm.Procedimiento[] proc_orm = (orm.Procedimiento[])(r.procedimiento.toArray());
+		for(int i=0; i< r.procedimiento.size(); i++){
+			procedimientos[i] = ProcedimientoVo.fromORM(proc_orm[i]);
+		}
+		
+		//Recetas
+		RecetaVo[] recetas = new RecetaVo[ r.receta.size()];
+		orm.Receta[] rec_orm = (orm.Receta[])(r.receta.toArray());
+		for(int i=0; i< r.receta.size(); i++){
+			recetas[i] = RecetaVo.fromORM(rec_orm[i]);
+		}
+		
+		
 		RceVo rc = new RceVo(r.getId(), r.getEncounter_uuid(), r.getAlergias(), r.getAnamnesis(), 
 		r.getMotivo(), r.getExamen_fisico(), r.getIndicador_medico(), r.getIndicador_cierre(), 
-		r.getHipotesis(), r.getDetalle_ges(), HoraMedicaVo.fromORM(r.getHora_medica()), RecetaVo.fromORM(r.getReceta()), 
-		DiagnosticoVo.fromORM(r.getDiagnostico()), ProcedimientoVo.fromORM(r.getProcedimiento()), 
-		ActividadVo.fromORM(r.getActividad()), PacienteVo.fromORM(r.getPaciente()));
+		r.getHipotesis(), r.getDetalle_ges(), HoraMedicaVo.fromORM(r.getHora_medica()), recetas, 
+		DiagnosticoVo.fromORM(r.getDiagnostico()), procedimientos, 
+		actividades, PacienteVo.fromORM(r.getPaciente()));
 		return rc;
 	}
 	

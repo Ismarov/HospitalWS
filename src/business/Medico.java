@@ -1,4 +1,4 @@
-package bussines;
+package business;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -9,34 +9,31 @@ import org.orm.PersistentException;
 
 import orm.Hora_medicaCriteria;
 import vo.HoraMedicaVo;
-//import vo.MedicoVo;
-//import vo.PacienteVo;
+
 import vo.ReservaVo;
 
-import com.google.gson.Gson;
 
 /**
  * 
  * Clase Medico Es nuestra clase Medico de la capa de negocios. Contiene todos
- * los atributos de nuestro MedicoVo, y añade las funcionalidades de
+ * los atributos de nuestro MedicoVo, y aï¿½ade las funcionalidades de
  * persistencia de la capa ORM.
  *
  */
 public class Medico {
 
 	/**
-	 * Método buscarSuDisponibilidadHora Busca las horas médicas disponibles de
-	 * un médico dado entre un rango de fechas.
+	 * Mï¿½todo buscarSuDisponibilidadHora Busca las horas mï¿½dicas disponibles de
+	 * un mï¿½dico dado entre un rango de fechas.
 	 * 
 	 * @param idMedico
 	 * @param f1
 	 * @param f2
-	 * @return Lista de horas médicas disponibles del Médico.
+	 * @return Lista de horas mï¿½dicas disponibles del Mï¿½dico.
 	 */
 
-	public String buscarSuDisponibilidadHora(int idMedico, Date f1, Date f2) {
-		Gson g = new Gson();
-		List<HoraMedicaVo> lhoras = new ArrayList<HoraMedicaVo>();
+	public ArrayList<HoraMedicaVo> buscarSuDisponibilidadHora(int idMedico, Date f1, Date f2) {
+		ArrayList<HoraMedicaVo> lhoras = new ArrayList<HoraMedicaVo>();
 		try {
 			Hora_medicaCriteria c = new Hora_medicaCriteria();
 			c.f_inicio.between(new Timestamp(f1.getTime()),
@@ -50,7 +47,7 @@ public class Medico {
 				HoraMedicaVo hmed = HoraMedicaVo.fromORM(horas.get(i));
 				lhoras.add(hmed);
 			}// end for
-			return g.toJson(lhoras);
+			return lhoras;
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -59,18 +56,17 @@ public class Medico {
 	}
 
 	/**
-	 * Método ReservarHoraMedicaControl Recibe un arreglo de enteros
+	 * Mï¿½todo ReservarHoraMedicaControl Recibe un arreglo de enteros
 	 * correspondientes a horas de control y el id del paciente para
 	 * posteriormente reservarlas.
 	 * 
 	 * @param idHoraControl
 	 * @param idPaciente
-	 * @return Lista de horas reservadas.
+	 * @return ValueObject representando la reserva de las horas reservadas.
 	 */
-	public String ReservarHoraMedicaControl(int idHoraControl[], int idPaciente) {
+	public ReservaVo reservarHoraMedicaControl(int idHoraControl[], int idPaciente) {
 
-		Gson g = new Gson();
-		List<orm.Hora_medica> horas = new ArrayList<orm.Hora_medica>();
+		ArrayList<orm.Hora_medica> horas = new ArrayList<orm.Hora_medica>();
 		try {
 
 			orm.Paciente pa = orm.PacienteDAO.getPacienteByORMID(idPaciente);
@@ -98,7 +94,7 @@ public class Medico {
 				orm.ReservaDAO.save(re);
 				orm.ReservaDAO.refresh(re);
 				reVo = ReservaVo.fromORM(re);
-				return g.toJson(reVo);
+				return reVo;
 
 			}
 
