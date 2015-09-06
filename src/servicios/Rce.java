@@ -1,6 +1,8 @@
 package servicios;
 import java.util.ArrayList;
 
+import org.orm.PersistentException;
+
 import vo.RceVo;
 
 import com.google.gson.Gson;
@@ -50,10 +52,16 @@ public class Rce {
 			int diagnostico_id, int[] lprocedimiento_id,
 			int[] lactividad_id, int paciente_id, int[] lCertificados) {
 		
-		RceVo rcevo = rce.ingresarRce(id, encounter_uuid, alergias, anamnesis, motivo,
+		RceVo rcevo = null;
+		try{
+		rcevo = rce.ingresarRce(id, encounter_uuid, alergias, anamnesis, motivo,
 				examen_fisico, indicador_medico, indicador_cierre, hipotesis,
 				detalle_ges, horamedica_id, receta_json, diagnostico_id,
 				lprocedimiento_id, lactividad_id, paciente_id, lCertificados);
+		}
+		catch(PersistentException ex){
+			ex.printStackTrace();
+		}
 		
 		return g.toJson(rcevo);
 	}

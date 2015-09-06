@@ -7,6 +7,7 @@ import org.orm.PersistentException;
 import org.orm.PersistentTransaction;
 
 import orm.Hospitaldb2PersistentManager;
+import org.orm.*;
 import orm.MedicoDAO;
 import orm.PacienteDAO;
 import orm.Receta;
@@ -149,21 +150,20 @@ public class Rce {
 	 * @param paciente_id
 	 * @param lCertificados
 	 * @return ValueObject representando el RCE ingresado, o null si ocurre un error. 
+	 * @throws PersistentException 
 	 */
 	public RceVo ingresarRce(int id, String encounter_uuid, String alergias, String anamnesis,
 			String motivo, String examen_fisico, String indicador_medico,
 			String indicador_cierre, String hipotesis, String detalle_ges,
 			int horamedica_id, String receta_json,
 			int diagnostico_id, int[] lprocedimiento_id,
-			int[] lactividad_id, int paciente_id, int[] lCertificados) {
+			int[] lactividad_id, int paciente_id, int[] lCertificados) throws PersistentException {
 
 			Gson g = new Gson();
 			
+			// Iniciar Transacción
+			PersistentTransaction t = orm.Hospitaldb2PersistentManager.instance().getSession().beginTransaction();
 			try {
-				
-				// Iniciar Transacción
-				PersistentTransaction t = Hospitaldb2PersistentManager.instance().getSession().beginTransaction();
-
 				// Procesar recetas
 				RecetaVo[] recetas = g.fromJson(receta_json, RecetaVo[].class);
 				orm.Receta[] r_orm = new orm.Receta[recetas.length];
@@ -211,11 +211,15 @@ public class Rce {
 				rce.setDetalle_ges(detalle_ges);
 				rce.setDiagnostico(diag);
 				rce.setPaciente(paci);
-				rce.setHora_medica(hora);
+				rce.setHora_medica(hora);			
 				
-				if (orm.RceDAO.save(rce)) {					
-					orm.RceDAO.refresh(rce);
-					
+				orm.RceDAO.save(rce);
+				
+				// Comprometer la transacción
+				t.commit();
+				
+				// Ejecutar asociaciones.
+				if (orm.RceDAO.refresh(rce)) {
 					// Asociar con Certificados, Actividades, Procedimientos y Recetas
 					for (int i = 0; i < c.size(); i++) {
 						rce.certificado.add(c.get(i));
@@ -228,18 +232,18 @@ public class Rce {
 					}
 					for (int i = 0; i < r_orm.length; i++) {
 						rce.receta.add(r_orm[i]);
-					}
-					
+					}					
 					orm.RceDAO.save(rce);
 					orm.RceDAO.refresh(rce);
 				}
-				
-				// Comprometer la transacción
-				t.commit();				
+				// Rotornar objeto
 				return RceVo.fromORM(rce);
 				
-			} catch (PersistentException e1) {
+			} catch (PersistentException e) {
 				// TODO Auto-generated catch block
+				e.printStackTrace();
+				t.rollback();
+			} catch (Exception e1){
 				e1.printStackTrace();
 			}
 		return null;
