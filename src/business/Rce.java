@@ -7,7 +7,7 @@ import org.orm.PersistentException;
 import org.orm.PersistentTransaction;
 
 import orm.Hospitaldb2PersistentManager;
-import org.orm.*;
+
 import orm.MedicoDAO;
 import orm.PacienteDAO;
 import orm.Receta;
@@ -23,6 +23,7 @@ import vo.RceVo;
 import vo.Rce_cierreVo;
 import vo.RecetaVo;
 import vo.Tiempo_controlVo;
+import cliente.PersonOpenMRS;
 
 import com.google.gson.Gson;
 
@@ -236,9 +237,10 @@ public class Rce {
 					orm.RceDAO.save(rce);
 					orm.RceDAO.refresh(rce);
 				}
-				// Rotornar objeto
+				// Retornar objeto
+				PersonOpenMRS omrs = new PersonOpenMRS();
+				omrs.ingresarEncuentroOMRS(RceVo.fromORM(rce));
 				return RceVo.fromORM(rce);
-				
 			} catch (PersistentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

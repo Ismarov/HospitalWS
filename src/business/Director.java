@@ -20,7 +20,7 @@ import vo.HoraMedicaVo;
 import vo.MedicoVo;
 import vo.PacienteVo;
 import vo.PersonaVo;
-
+import cliente.*;
 
 public class Director {
 
@@ -63,6 +63,8 @@ public class Director {
 				if (orm.PacienteDAO.save(pac)) {
 					orm.PacienteDAO.refresh(pac);
 					PacienteVo pvo = PacienteVo.fromORM(pac);
+					PersonOpenMRS omrs = new PersonOpenMRS();
+					omrs.ingresarPacienteOMRS(pvo);
 					return pvo;
 				}
 			}
@@ -114,7 +116,7 @@ public class Director {
 
 			if (orm.PersonaDAO.save(per) && esp != null) {
 				// Si la persona se logra persistir, se asigna como M�dico
-
+				
 				orm.PersonaDAO.refresh(per);
 				orm.Medico med = new orm.Medico();
 				med.setPersona(per);
@@ -122,6 +124,9 @@ public class Director {
 				if (orm.MedicoDAO.save(med)) {
 					orm.MedicoDAO.refresh(med);
 					MedicoVo mvo = MedicoVo.fromORM(med);
+					
+					PersonOpenMRS omrs = new PersonOpenMRS();
+					omrs.ingresarMedicoOMRS(mvo);
 					return mvo;
 				}
 			}
