@@ -263,7 +263,7 @@ public class Rce {
 					"pacienteid='" + String.valueOf(IdPaciente) + "'",
 					null);
 
-			for (int i = 0; i < ormRce.length; i++) {
+			for (int i = ormRce.length-1; i >= 0; i--) {
 				rcevos.add(RceVo.fromORM(ormRce[i]));
 			}
 			return rcevos;

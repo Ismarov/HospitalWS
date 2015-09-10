@@ -168,6 +168,7 @@ public class Paciente {
 			*/
 			Hora_medicaCriteria hc = new Hora_medicaCriteria();
 			hc.f_inicio.gt(new Timestamp(f1.getTime()));
+			hc.rce.isEmpty();
 			ReservaCriteria rc = new ReservaCriteria();
 			rc.pacienteId.eq(idPaciente);
 			
